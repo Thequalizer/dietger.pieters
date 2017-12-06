@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity{
     private TextView datumText;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private Button datumButton;
+    private Button btnHit;
+    private JsonTask jsonTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_koers_overzicht);
         datumText = (TextView) findViewById(R.id.datumSelectie);
         datumButton = (Button) findViewById(R.id.datumVanKnop);
+        btnHit = (Button) findViewById(R.id.getFromJson);
 
 
         mDateListener = new DatePickerDialog.OnDateSetListener() {
@@ -53,6 +59,39 @@ public class MainActivity extends AppCompatActivity{
         datePickerDialog.show();
 
     }
+
+    public void showWedstrijden(View v){
+        JSONArray jsonArray = WedstrijdController.getWedstrijdenProfs("https://api.myjson.com/bins/10hi0f");
+
+        for (int i=0; i < jsonArray.length(); i++)
+        {
+            try {
+                JSONObject oneObject = jsonArray.getJSONObject(i);
+                // Pulling items from the array
+                String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                String oneObjectsItem2 = oneObject.getString("afstand");
+
+                System.out.println(oneObjectsItem);
+                System.out.println(oneObjectsItem2);
+
+            } catch (JSONException e) {
+                // Oops
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

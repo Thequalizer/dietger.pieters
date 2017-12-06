@@ -1,80 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="dietgerpieters.werkstuk.MainActivity">
-
-    <TextView
+    <RelativeLayout
+        android:id="@+id/keuzeOpties"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:text="@string/overzicht"
-        android:id="@+id/overzicht"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:text="@string/overzicht"
+            android:id="@+id/overzicht"
+            android:layout_centerHorizontal="true"
 
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Datum van: "
-        android:id="@+id/datumSelectieVan"
-        android:layout_below="@id/overzicht"
-        android:layout_alignBaseline="@id/datumVanKnop"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="  /  /    "
-        android:id="@+id/datumSelectie"
-        android:layout_toRightOf="@id/datumSelectieVan"
-        android:layout_below="@id/overzicht"
-        android:layout_alignBaseline="@id/datumVanKnop"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Datum van: "
+            android:id="@+id/datumSelectieVan"
+            android:layout_below="@id/overzicht"
+            android:layout_alignBaseline="@id/datumVanKnop"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  /  /    "
+            android:id="@+id/datumSelectie"
+            android:layout_toRightOf="@id/datumSelectieVan"
+            android:layout_below="@id/overzicht"
+            android:layout_alignBaseline="@id/datumVanKnop"
 
-        />
+            />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/datumSelectie"
+            android:text="Choose Date"
+            android:layout_below="@id/overzicht"
+            android:id="@+id/datumVanKnop"
+            android:onClick="showDialogCalender"
+            />
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Datum van: "
+            android:id="@+id/datumSelectieTot"
+            android:layout_below="@id/datumSelectie"
+            android:layout_alignBaseline="@id/datumTotKnop"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  /  /    "
+            android:id="@+id/tijdTot"
+            android:layout_toRightOf="@id/datumSelectieVan"
+            android:layout_below="@id/overzicht"
+            android:layout_alignBaseline="@id/datumTotKnop"
+
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/datumSelectie"
+            android:text="Choose Date"
+            android:layout_below="@id/datumVanKnop"
+            android:id="@+id/datumTotKnop"
+            android:onClick="showDialogCalender"
+            />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/wedstrijdenLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:layout_below="@+id/keuzeOpties"
+        >
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/datumSelectie"
-        android:text="Choose Date"
-        android:layout_below="@id/overzicht"
-        android:id="@+id/datumVanKnop"
-        android:onClick="showDialogCalender"
+        android:text="Toon wedstrijd"
+        android:id="@+id/getFromJson"
+        android:onClick="showWedstrijden"
         />
+        <!--android:onClick=""-->
 
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Datum van: "
-        android:id="@+id/datumSelectieTot"
-        android:layout_below="@id/datumSelectie"
-        android:layout_alignBaseline="@id/datumTotKnop"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="  /  /    "
-        android:id="@+id/tijdTot"
-        android:layout_toRightOf="@id/datumSelectieVan"
-        android:layout_below="@id/overzicht"
-        android:layout_alignBaseline="@id/datumTotKnop"
-
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/datumSelectie"
-        android:text="Choose Date"
-        android:layout_below="@id/datumVanKnop"
-        android:id="@+id/datumTotKnop"
-        android:onClick="showDialogCalender"
-        />
-
-
+    </RelativeLayout>
 </RelativeLayout>
