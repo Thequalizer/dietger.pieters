@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dietgerpieters.werkstuk.Activities.InformatieActivity"
+    android:padding="6dp"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titelValue"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Informatie"
+        android:textSize="50sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/titelValue"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/streepje"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/streepje"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:text="@string/InfoContent"
+        />
+
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package dietgerpieters.werkstuk;
+package dietgerpieters.werkstuk.Threading;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;

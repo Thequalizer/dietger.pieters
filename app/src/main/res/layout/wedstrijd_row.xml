@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dip"
+    >
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titel"
+        android:text="@string/Titel"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titelValue"
+        android:layout_toRightOf="@id/titel"
+        android:layout_marginLeft="72dip"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/afstand"
+        android:id="@+id/aantalDln"
+        android:text="@string/Deelnemers"
+        android:layout_marginTop="7dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/aantalDln"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="7dp"
+        android:id="@+id/aantalDlnValue"
+        android:layout_toRightOf="@id/aantalDln"
+        android:layout_below="@id/afstand"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/afstand"
+        android:text="@string/Afstand"
+        android:layout_below="@id/titel"
+        android:layout_marginTop="7dip"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/afstandValue"
+        android:text=""
+        android:layout_marginTop="7dip"
+        android:layout_marginLeft="51dip"
+        android:layout_below="@id/titelValue"
+        android:layout_toRightOf="@id/afstand"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dip"
+        android:layout_marginLeft="5dip"
+        android:layout_toRightOf="@id/afstandValue"
+        android:layout_below="@id/titelValue"
+        android:text="@string/km"
+        />
+</RelativeLayout>
