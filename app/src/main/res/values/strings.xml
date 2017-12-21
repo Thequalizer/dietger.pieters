@@ -12,4 +12,12 @@
     <string name="Info">Info</string>
     <string name="Informatie">Informatie</string>
     <string name="InfoContent">Deze app is ontwikkeld door Dietger Pieters.\n\n\n\nStudent aan de Erasmushogeschool Brussel campus Kaai.\n\n\n\nVersie 0.0.1</string>
+    <string-array name="categories_array">
+        <item>Profs</item>
+        <item>Elite zonder contract</item>
+        <item>Beloften</item>
+        <item>Junioren</item>
+        <item>Nieuwelingen</item>
+        <item>Aspiranten</item>
+    </string-array>
 </resources>

@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,27 +25,41 @@ import dietgerpieters.werkstuk.Threading.JsonTask;
 public class WedstrijdController {
     private static JsonTask jsonTask;
 
-    public static List<Wedstrijd> getWedstrijdenProfs(String url){
+    public static List<Wedstrijd> getWedstrijdenMetDatum(String url, Date dateVan, Date dateTot, String categorie){
         jsonTask = new JsonTask();
         Wedstrijd wedstrijd;
         List<Wedstrijd> wedstrijden = new ArrayList<>();
         Date datum = Calendar.getInstance().getTime();
         try {
             JSONObject jsonObject = new JSONObject(jsonTask.execute(url).get());
-            JSONArray jsonArray =  jsonObject.getJSONArray("Profs");
+            JSONArray jsonArray =  jsonObject.getJSONArray(categorie);
 
+            SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
 
 
             for (int i=0; i < jsonArray.length(); i++)
             {
+
                 try {
                     JSONObject oneObject = jsonArray.getJSONObject(i);
                     // Pulling items from the array
                     String oneObjectsItem = oneObject.getString("wedstrijdNaam");
                     String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
                     int afstand = Integer.parseInt(oneObjectsItem2);
                     wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum);
-                    wedstrijden.add(wedstrijd);
+                    if (wedstrijd.getVertrekDatum().after(dateVan) && wedstrijd.getVertrekDatum().before(dateTot)){
+                        wedstrijden.add(wedstrijd);
+                    }
 
                 } catch (JSONException e) {
                     // Oops

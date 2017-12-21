@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.WedstrijdenOverzichtActivity" />
-        <activity android:name=".Activities.WedstrijdDetailActivity" />
+        <activity android:name=".Activities.WedstrijdenOverzichtActivity" android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.WedstrijdDetailActivity" android:parentActivityName=".Activities.WedstrijdenOverzichtActivity"/>
         <activity android:name=".Activities.InformatieActivity"></activity>
     </application>
 

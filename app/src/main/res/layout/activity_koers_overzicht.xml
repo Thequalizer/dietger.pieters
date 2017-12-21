@@ -66,7 +66,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Datum van: "
+            android:text=" Datum tot: "
             android:id="@+id/datumSelectieTot"
             android:layout_below="@id/datumSelectie"
             android:layout_alignBaseline="@id/datumTotKnop"
@@ -82,6 +82,7 @@
 
             />
 
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,8 +90,14 @@
             android:text="Choose Date"
             android:layout_below="@id/datumVanKnop"
             android:id="@+id/datumTotKnop"
-            android:onClick="showDialogCalender"
+            android:onClick="showDialogCalender2"
             />
+        <Spinner
+            android:id="@+id/categorie_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datumSelectieTot"
+            android:layout_marginTop="30dp"/>
     </RelativeLayout>
 
 
