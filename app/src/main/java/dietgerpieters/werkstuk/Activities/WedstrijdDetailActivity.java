@@ -25,7 +25,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wedstrijd_detail);
 
         w = (Wedstrijd) getIntent().getSerializableExtra("wedstrijd");
-        this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").build();
+        this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
         TextView textView = findViewById(R.id.titelValue);
         textView.setText(w.getTitel());
@@ -61,6 +61,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
     }
 
     public void inschrijvingWedstrijd(View v){
+
         mDb.wedstrijdDAO().insertWedstrijd(w);
 
     }

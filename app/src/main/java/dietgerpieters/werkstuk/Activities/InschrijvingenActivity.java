@@ -28,12 +28,12 @@ public class InschrijvingenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inschrijvingen);
 
 
-        mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").build();
+        mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
 
-       /* new AsyncTask<Void, Void, Integer>() {
-            @Override
-            protected Integer doInBackground(Void... params) {
+
+
+
                 final ListView listview = (ListView) findViewById(R.id.listview);
 
                 final ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
@@ -55,19 +55,8 @@ public class InschrijvingenActivity extends AppCompatActivity {
                     }
                 });
 
+            }
 
-                @Override
-                protected void onPostExecute (Integer agentsCount){
-                    if (agentsCount > 0) {
-                        //2: If it already exists then prompt user
-                        Toast.makeText(InschrijvingenActivity.this, "Agent already exists!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(InschrijvingenActivity.this, "Agent does not exist! Hurray :)", Toast.LENGTH_LONG).show();
-                        onBackPressed();
-                    }
-                }
-            }.execute();*/
 
-    }
 }
 
