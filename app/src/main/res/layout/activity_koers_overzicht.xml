@@ -118,6 +118,15 @@
         android:id="@+id/getFromJson"
         android:onClick="showWedstrijden"
         />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toon inschrijvingen"
+            android:layout_below="@id/getFromJson"
+            android:id="@+id/toonInschrijvingen"
+            android:onClick="toonInschrijvingen"
+            />
         <!--android:onClick=""-->
 
     </RelativeLayout>

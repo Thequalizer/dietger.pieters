@@ -1,18 +1,56 @@
 package dietgerpieters.werkstuk.Models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+
+import dietgerpieters.werkstuk.TypeConverters.DateConverter;
 
 /**
  * Created by User on 6/12/2017.
  */
 
+@Entity(tableName = "wedstrijden")
+@TypeConverters(DateConverter.class)
 public class Wedstrijd implements Serializable {
+
     private String titel;
+
     private double afstand;
+
     private int maxAantalDeelnemers;
+
     private int aantalDeelnemers;
+
+
+    @Ignore
+    private Categorie categorie;
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
 
     public String getTitel() {
         return titel;
@@ -53,25 +91,29 @@ public class Wedstrijd implements Serializable {
     public void setAfgelopen(boolean afgelopen) {
         this.afgelopen = afgelopen;
     }
-
+/*
     public HashMap getUitslag() {
         return uitslag;
     }
 
     public void setUitslag(HashMap uitslag) {
         this.uitslag = uitslag;
-    }
+    }*/
 
     private Date vertrekDatum;
     private boolean afgelopen;
-    private HashMap uitslag;
+    //private HashMap uitslag;
 
-    public Wedstrijd (String wTitel, double wAfstand, int wWantalDeelnemers, Date wVertrekUur){
+    public Wedstrijd(){
+
+    }
+    public Wedstrijd (String wTitel, double wAfstand, int wWantalDeelnemers, Date wVertrekUur, Categorie categorie){
         this.titel = wTitel;
         this.aantalDeelnemers = wWantalDeelnemers;
         this.afstand = wAfstand;
         this.vertrekDatum = wVertrekUur;
         this.afgelopen = false;
+        this.categorie = categorie;
     }
 
     public void stopWedstrijd(){
@@ -87,6 +129,6 @@ public class Wedstrijd implements Serializable {
     }
 
 
-    public enum Categorie {PROFS, BELOFTEN, JUNIOREN}
+    public enum Categorie {PROFS, BELOFTEN, JUNIOREN, ELITEZC, NIEUWELINGEN, ASPIRANTEN}
 }
 

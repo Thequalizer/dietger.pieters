@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dietgerpieters.werkstuk.Activities.WedstrijdDetailActivity">
+    tools:context="dietgerpieters.werkstuk.Activities.InschrijvingenActivity">
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -16,32 +17,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 
         />
-
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/titelValue"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/my_toolbar"
-        android:text=""
-        android:textSize="10pt"
+        android:id="@+id/listview"
+        android:layout_below="@+id/my_toolbar"
         />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/titelValue"
-        android:id="@+id/streepje"
-        android:background="@android:color/darker_gray" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/streepje"
-        android:layout_centerHorizontal="true"
-        android:text="inschrijven"
-
-        />
-
 </RelativeLayout>

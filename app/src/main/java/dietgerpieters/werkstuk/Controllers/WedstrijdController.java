@@ -35,6 +35,29 @@ public class WedstrijdController {
             JSONArray jsonArray =  jsonObject.getJSONArray(categorie);
 
             SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+            Wedstrijd.Categorie categorie1;
+
+            switch (categorie){
+                case "Profs":
+                    categorie1 = Wedstrijd.Categorie.PROFS;
+                    break;
+                case "Elite zonder contract":
+                    categorie1 = Wedstrijd.Categorie.ELITEZC;
+                    break;
+                case "Beloften":
+                    categorie1 = Wedstrijd.Categorie.BELOFTEN;
+                    break;
+                case "Junioren":
+                    categorie1 = Wedstrijd.Categorie.JUNIOREN;
+                    break;
+                case "Nieuwelingen":
+                    categorie1 = Wedstrijd.Categorie.NIEUWELINGEN;
+                    break;
+                case "Aspiranten":
+                    categorie1 = Wedstrijd.Categorie.ASPIRANTEN;
+                    break;
+                default: categorie1 = Wedstrijd.Categorie.PROFS;
+            }
 
 
             for (int i=0; i < jsonArray.length(); i++)
@@ -56,7 +79,11 @@ public class WedstrijdController {
 
 
                     int afstand = Integer.parseInt(oneObjectsItem2);
-                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, categorie1);
+
+
+
+
                     if (wedstrijd.getVertrekDatum().after(dateVan) && wedstrijd.getVertrekDatum().before(dateTot)){
                         wedstrijden.add(wedstrijd);
                     }

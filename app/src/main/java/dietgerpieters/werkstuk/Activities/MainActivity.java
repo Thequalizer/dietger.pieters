@@ -73,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    public void toonInschrijvingen(View v){
+        Intent intent = new Intent(MainActivity.this, InschrijvingenActivity.class);
+        startActivity(intent);
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
