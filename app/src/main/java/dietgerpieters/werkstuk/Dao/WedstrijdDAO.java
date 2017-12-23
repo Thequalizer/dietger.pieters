@@ -25,7 +25,8 @@ public interface WedstrijdDAO {
     public void deleteWedstrijd(Wedstrijd wedstrijd);
     @Query("SELECT * FROM wedstrijden")
     public List<Wedstrijd> loadAllWedstrijden();
-/*
-    @Query("SELECT")
-*/
+
+    @Query("SELECT * FROM wedstrijden WHERE id = :id")
+    public Wedstrijd getWedstrijd(int id);
+
 }

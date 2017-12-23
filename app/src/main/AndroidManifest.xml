@@ -25,7 +25,8 @@
             android:name=".Activities.WedstrijdDetailActivity"
             android:parentActivityName=".Activities.WedstrijdenOverzichtActivity" />
         <activity android:name=".Activities.InformatieActivity" />
-        <activity android:name=".Activities.InschrijvingenActivity"></activity>
+        <activity android:name=".Activities.InschrijvingenActivity"
+            android:parentActivityName=".Activities.MainActivity"></activity>
     </application>
 
 </manifest>

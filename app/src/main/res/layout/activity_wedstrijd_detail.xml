@@ -7,14 +7,13 @@
     tools:context="dietgerpieters.werkstuk.Activities.WedstrijdDetailActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/my_toolbar2"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-
         />
 
     <TextView
@@ -22,8 +21,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/titelValue"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/my_toolbar"
         android:text=""
+        android:layout_below="@id/my_toolbar2"
         android:textSize="10pt"
         />
 
@@ -35,14 +34,30 @@
         android:id="@+id/streepje"
         android:background="@android:color/darker_gray" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/streepje"
+        >
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/streepje"
-        android:layout_centerHorizontal="true"
         android:text="inschrijven"
+        android:id="@+id/inschrijvingBtn"
         android:onClick="inschrijvingWedstrijd"
 
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/uitchrijvingBtn"
+        android:layout_toRightOf="@id/inschrijvingBtn"
+        android:layout_alignBaseline="@id/inschrijvingBtn"
+        android:text="uitschrijven"
+        android:onClick="uitschrijvingWedstrijd"
+
+        />
+    </RelativeLayout>
 
 </RelativeLayout>

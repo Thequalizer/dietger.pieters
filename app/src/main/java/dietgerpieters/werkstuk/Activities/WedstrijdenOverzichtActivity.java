@@ -37,8 +37,9 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wedstrijden_overzicht);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar1);
         setSupportActionBar(myToolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -78,6 +79,7 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(WedstrijdenOverzichtActivity.this, WedstrijdDetailActivity.class);
                 intent.putExtra("wedstrijd", myList.get(i));
+                intent.putExtra("naam", "WedstrijdenOverzichtActivity");
                 startActivity(intent);
 
 
