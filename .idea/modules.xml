@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Werkstuk.iml" filepath="$PROJECT_DIR$/Werkstuk.iml" />
+      <module fileurl="file://C:\Users\Dietger (Pantani)\Documents\school\android\WerkstukAndroid\Werkstuk.iml" filepath="C:\Users\Dietger (Pantani)\Documents\school\android\WerkstukAndroid\Werkstuk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WerkstukAndroid.iml" filepath="$PROJECT_DIR$/WerkstukAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -4,8 +4,15 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -15,20 +22,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import dietgerpieters.werkstuk.Controllers.WedstrijdController;
@@ -36,11 +39,19 @@ import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 import dietgerpieters.werkstuk.Threading.JsonTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
     private TextView datumText;
     private TextView datumTextTot;
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ArrayAdapter mStringAdapter;
+    private String[] mStringOfPlanets = new String[5];
+
+
+
     boolean date1, date2 = false;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private DatePickerDialog.OnDateSetListener mDateListener2;
@@ -50,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private JsonTask jsonTask;
     private Spinner categorieSpinner;
 
+    private ActionBarDrawerToggle mDrawerToggle;
+
     private void checkFields(){
         if (date1 && date2 && categorieSpinner.getSelectedItem().toString() != null){
             btnHit.setEnabled(true);
@@ -57,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
+
         switch (item.getItemId()) {
             case R.id.aboutus:
                 Intent launchIntent = new Intent(MainActivity.this, InformatieActivity.class);
@@ -72,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+
+
+
     }
     public void toonInschrijvingen(View v){
         Intent intent = new Intent(MainActivity.this, InschrijvingenActivity.class);
@@ -83,7 +106,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_koers_overzicht);
+        setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+
+
+
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this, drawer, myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+
+
+
+
+
+
         categorieSpinner = (Spinner) findViewById(R.id.categorie_spinner);
 
         datumText = (TextView) findViewById(R.id.datumSelectie);
@@ -94,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         btnHit = (Button) findViewById(R.id.getFromJson);
 
         btnHit.setEnabled(false);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorie_spinner);
@@ -222,6 +269,22 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(MainActivity.this, "Ongeldige datum selectie", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_mijn_ins){
+            toonInschrijvingen(new View(this));
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+
     }
 
 
