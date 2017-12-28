@@ -16,48 +16,14 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/titelValue"
-        android:layout_centerHorizontal="true"
-        android:text=""
+
+    <fragment
         android:layout_below="@id/my_toolbar2"
-        android:textSize="10pt"
-        />
-
-    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/titelValue"
-        android:id="@+id/streepje"
-        android:background="@android:color/darker_gray" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/streepje"
-        >
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="inschrijven"
-        android:id="@+id/inschrijvingBtn"
-        android:onClick="inschrijvingWedstrijd"
-
+        android:layout_height="match_parent"
+        android:id="@+id/detail_fragment"
+        android:name="dietgerpieters.werkstuk.Fragments.WedstrijdDetailFragment"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/uitchrijvingBtn"
-        android:layout_toRightOf="@id/inschrijvingBtn"
-        android:layout_alignBaseline="@id/inschrijvingBtn"
-        android:text="uitschrijven"
-        android:onClick="uitschrijvingWedstrijd"
 
-        />
-    </RelativeLayout>
 
 </RelativeLayout>

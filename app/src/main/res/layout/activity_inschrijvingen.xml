@@ -17,10 +17,28 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 
         />
-    <ListView
+    <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listview"
+        android:id="@+id/fragment_inschrijvingen"
+        android:name="dietgerpieters.werkstuk.Fragments.SelectieWedstrijdenFragment"
         android:layout_below="@+id/my_toolbar3"
         />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/fragment_inschrijvingen"
+        android:id="@+id/streepje"
+        android:background="@android:color/darker_gray" />
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_aanbevolen"
+        android:name="dietgerpieters.werkstuk.Fragments.AanbevolenFragment"
+        android:layout_below="@+id/streepje"
+        />
+
 </RelativeLayout>

@@ -73,9 +73,9 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(),
+              /*  Toast.makeText(getApplicationContext(),
                         "Click ListItem Number " + i, Toast.LENGTH_SHORT)
-                        .show();
+                        .show();*/
 
                 Intent intent = new Intent(WedstrijdenOverzichtActivity.this, WedstrijdDetailActivity.class);
                 intent.putExtra("wedstrijd", myList.get(i));

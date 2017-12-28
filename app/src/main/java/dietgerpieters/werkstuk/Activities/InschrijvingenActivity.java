@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import dietgerpieters.werkstuk.Adapters.WedstrijdenAanbevolenAdapter;
 import dietgerpieters.werkstuk.Adapters.WedstrijdenAdapter;
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
@@ -44,20 +45,21 @@ public class InschrijvingenActivity extends AppCompatActivity {
 
 
 
-                ListView listview = (ListView) findViewById(R.id.listview);
+                ListView listview = (ListView) findViewById(android.R.id.list);
 
                 ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 
                 WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
+                WedstrijdenAanbevolenAdapter dAdapter = new WedstrijdenAanbevolenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
+
+
                 listview.setAdapter(wAdapter);
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 
-                        Toast.makeText(getApplicationContext(),
-                                "Click ListItem Number " + i, Toast.LENGTH_SHORT)
-                                .show();
+
 
                         Intent intent = new Intent(InschrijvingenActivity.this, WedstrijdDetailActivity.class);
                         intent.putExtra("wedstrijd", myList.get(i));

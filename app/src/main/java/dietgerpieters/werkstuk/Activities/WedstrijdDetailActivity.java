@@ -2,6 +2,8 @@ package dietgerpieters.werkstuk.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
@@ -109,6 +111,15 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
         } else {
             Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al uitgeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    private void initFragments(){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
 
     }
 }
