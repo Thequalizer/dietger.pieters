@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import dietgerpieters.werkstuk.Activities.WedstrijdDetailActivity;
+import dietgerpieters.werkstuk.Adapters.WedstrijdenAanbevolenAdapter;
 import dietgerpieters.werkstuk.Adapters.WedstrijdenAdapter;
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
@@ -41,11 +42,11 @@ public class AanbevolenFragment extends ListFragment implements AdapterView.OnIt
         super.onActivityCreated(savedInstanceState);
         mDb = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
-        ListView listview = (ListView) getActivity().findViewById(android.R.id.list);
+        ListView listview = (ListView) getActivity().findViewById(R.id.list222);
 
         ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 
-        WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getActivity().getApplicationContext(), R.layout.wedstrijd_row, myList);
+        WedstrijdenAanbevolenAdapter wAdapter = new WedstrijdenAanbevolenAdapter(getActivity().getApplicationContext(), R.layout.wedstrijd_row, myList);
         listview.setAdapter(wAdapter);
         listview.setOnItemClickListener(this);
 

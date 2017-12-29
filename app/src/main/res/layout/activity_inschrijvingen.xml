@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dietgerpieters.werkstuk.Activities.InschrijvingenActivity">
+    tools:context="dietgerpieters.werkstuk.Activities.InschrijvingenActivity"
+    android:orientation="vertical"
+    android:weightSum="2"
+    >
 
 
     <android.support.v7.widget.Toolbar
@@ -17,28 +20,37 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 
         />
-    <fragment
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fragment_inschrijvingen"
-        android:name="dietgerpieters.werkstuk.Fragments.SelectieWedstrijdenFragment"
-        android:layout_below="@+id/my_toolbar3"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:id="@+id/list22"
         />
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_weight="0"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/fragment_inschrijvingen"
         android:id="@+id/streepje"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"
 
-    <fragment
-        android:layout_width="wrap_content"
+        />
+
+   <!-- <fragment
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_aanbevolen"
         android:name="dietgerpieters.werkstuk.Fragments.AanbevolenFragment"
         android:layout_below="@+id/streepje"
+        android:layout_weight="1"
+        />-->
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:id="@+id/list222"
         />
-
-</RelativeLayout>
+</LinearLayout>

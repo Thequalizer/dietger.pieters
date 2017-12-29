@@ -34,18 +34,21 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
         inschrBtn = (Button) findViewById(R.id.inschrijvingBtn);
         uitschrBtn = (Button) findViewById(R.id.uitchrijvingBtn);
 
-        w = (Wedstrijd) getIntent().getSerializableExtra("wedstrijd");
-        parentName = getIntent().getStringExtra("naam");
+
+        Bundle extras = getIntent().getExtras();
+
+        w = (Wedstrijd) extras.getSerializable("wedstrijd");
+
+        extras.getSerializable("wedstrijd");
+        parentName = extras.getString("naam");
+
+
+
+        /*w = (Wedstrijd) getIntent().getSerializableExtra("wedstrijd");
+        parentName = getIntent().getStringExtra("naam");*/
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
-
-        if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) == null) {
-            uitschrBtn.setEnabled(false);
-            inschrBtn.setEnabled(true);
-        } else {
-            uitschrBtn.setEnabled(true);
-            inschrBtn.setEnabled(false);
-        }
+        initButtons();
 
 
         TextView textView = findViewById(R.id.titelValue);
@@ -93,7 +96,31 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initButtons(){
+        w.getId();
+        mDb.wedstrijdDAO().loadAllWedstrijden();
+
+
+
+
+        Wedstrijd wed = mDb.wedstrijdDAO().getWedstrijd(w.getId());
+
+
+        if (wed == null) {
+            inschrBtn.setEnabled(true);
+            uitschrBtn.setEnabled(false);
+        } else {
+            inschrBtn.setEnabled(false);
+            uitschrBtn.setEnabled(true);
+            Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
     public void inschrijvingWedstrijd(View v){
+
+
         if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) == null) {
             mDb.wedstrijdDAO().insertWedstrijd(w);
             inschrBtn.setEnabled(false);

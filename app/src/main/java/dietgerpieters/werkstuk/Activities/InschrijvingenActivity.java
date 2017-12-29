@@ -45,31 +45,62 @@ public class InschrijvingenActivity extends AppCompatActivity {
 
 
 
-                ListView listview = (ListView) findViewById(android.R.id.list);
+        ListView listview = (ListView) findViewById(R.id.list22);
 
+        ListView listview_aanbevolen = (ListView) findViewById(R.id.list222);
+
+
+
+
+
+        ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
+
+
+        if (myList.size() > 0) {
+            //aanbevolen wedstrijd op categorie zoeken
+            Wedstrijd.Categorie categorie = myList.get(0).getCategorie();
+        }
+
+
+
+        WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
+        WedstrijdenAanbevolenAdapter dAdapter = new WedstrijdenAanbevolenAdapter(getApplicationContext(), R.layout.wedstrijd_row_aanbevolen, myList);
+
+
+        listview.setAdapter(wAdapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 
-                WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
-                WedstrijdenAanbevolenAdapter dAdapter = new WedstrijdenAanbevolenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
 
 
-                listview.setAdapter(wAdapter);
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
+                Intent intent = new Intent(InschrijvingenActivity.this, WedstrijdDetailActivity.class);
+                intent.putExtra("wedstrijd", myList.get(i));
+                myList.get(i).getId();
+                startActivity(intent);
 
-
-
-                        Intent intent = new Intent(InschrijvingenActivity.this, WedstrijdDetailActivity.class);
-                        intent.putExtra("wedstrijd", myList.get(i));
-                        startActivity(intent);
-
-
-                    }
-                });
 
             }
+        });
+
+        listview_aanbevolen.setAdapter(dAdapter);
+        listview_aanbevolen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
+
+
+
+                Intent intent = new Intent(InschrijvingenActivity.this, WedstrijdDetailActivity.class);
+                intent.putExtra("wedstrijd", myList.get(i));
+                startActivity(intent);
+
+
+            }
+        });
+
+    }
 
 
 }

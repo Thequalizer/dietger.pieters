@@ -65,10 +65,10 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
 
 
 
-        final ListView listview = (ListView) findViewById(R.id.listview);
+        ListView listview = (ListView) findViewById(R.id.listview);
 
 
-        final WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
+        WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
         listview.setAdapter(wAdapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,8 +78,10 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
                         .show();*/
 
                 Intent intent = new Intent(WedstrijdenOverzichtActivity.this, WedstrijdDetailActivity.class);
-                intent.putExtra("wedstrijd", myList.get(i));
-                intent.putExtra("naam", "WedstrijdenOverzichtActivity");
+                Bundle extras = new Bundle();
+                extras.putSerializable("wedstrijd",myList.get(i));
+                extras.putString("naam", "WedstrijdenOverzichtActivity");
+                intent.putExtras(extras);
                 startActivity(intent);
 
 

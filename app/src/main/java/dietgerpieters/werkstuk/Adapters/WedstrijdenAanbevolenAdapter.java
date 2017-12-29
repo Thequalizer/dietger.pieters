@@ -41,7 +41,7 @@ public class WedstrijdenAanbevolenAdapter extends ArrayAdapter<Wedstrijd> {
         TextView afstandView = (TextView) rowView.findViewById(R.id.afstandValue);
         TextView titelView = (TextView) rowView.findViewById(R.id.titelValue);
 
-        final Button addBtn = (Button)convertView.findViewById(R.id.add_btn);
+        final Button addBtn = (Button)rowView.findViewById(R.id.add_btn);
 
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
