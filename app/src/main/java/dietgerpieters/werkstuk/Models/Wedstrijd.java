@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
+import dietgerpieters.werkstuk.TypeConverters.CategorieConverter;
 import dietgerpieters.werkstuk.TypeConverters.DateConverter;
 
 /**
@@ -17,7 +18,7 @@ import dietgerpieters.werkstuk.TypeConverters.DateConverter;
  */
 
 @Entity(tableName = "wedstrijden")
-@TypeConverters(DateConverter.class)
+@TypeConverters({DateConverter.class, CategorieConverter.class})
 public class Wedstrijd implements Serializable {
 
     private String titel;
@@ -28,11 +29,9 @@ public class Wedstrijd implements Serializable {
 
     private int aantalDeelnemers;
 
-
-    @Ignore
     private Categorie categorie;
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int id;
 
 
@@ -107,7 +106,8 @@ public class Wedstrijd implements Serializable {
     public Wedstrijd(){
 
     }
-    public Wedstrijd (String wTitel, double wAfstand, int wWantalDeelnemers, Date wVertrekUur, Categorie categorie){
+    public Wedstrijd (String wTitel, double wAfstand, int wWantalDeelnemers, Date wVertrekUur, Categorie categorie, int id){
+        this.id = id;
         this.titel = wTitel;
         this.aantalDeelnemers = wWantalDeelnemers;
         this.afstand = wAfstand;

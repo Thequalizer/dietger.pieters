@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import dietgerpieters.werkstuk.Activities.InschrijvingenActivity;
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
@@ -50,13 +51,16 @@ public class WedstrijdenAanbevolenAdapter extends ArrayAdapter<Wedstrijd> {
                 AppDatabase mDb = Room.databaseBuilder(getContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
                 ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 
-                myList.add(list.get(position));
+                mDb.wedstrijdDAO().insertWedstrijd(list.get(position));
 
                 notifyDataSetChanged();
 
                 Toast.makeText(getContext(), "Wedstrijd toegevoegd", Toast.LENGTH_SHORT).show();
-                list.remove(position);
-                v.refreshDrawableState();
+
+
+                ((InschrijvingenActivity)context).recreate();
+
+
             }
         });
 

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/drawer_layout"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="dietgerpieters.werkstuk.Activities.MainActivity">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
+
+    <RelativeLayout
+        android:id="@+id/keuzeOpties"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp">
+
+        <TextView
+            android:id="@+id/overzicht"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Wedstrijden"
+            android:textSize="40sp"
+
+            />
+
+        <TextView
+            android:id="@+id/datumSelectieVan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/datumVanKnop"
+            android:layout_below="@id/overzicht"
+            android:text=" Datum van: " />
+
+        <TextView
+            android:id="@+id/datumSelectie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/datumVanKnop"
+            android:layout_below="@id/overzicht"
+            android:layout_toRightOf="@id/datumSelectieVan"
+            android:text="  /  /    "
+
+            />
+
+        <Button
+            android:id="@+id/datumVanKnop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/overzicht"
+            android:layout_toRightOf="@id/datumSelectie"
+            android:onClick="showDialogCalender"
+            android:text="Choose Date" />
+
+
+        <TextView
+            android:id="@+id/datumSelectieTot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/datumTotKnop"
+            android:layout_below="@id/datumSelectie"
+            android:text=" Datum tot: " />
+
+        <TextView
+            android:id="@+id/tijdTot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/datumTotKnop"
+            android:layout_below="@id/overzicht"
+            android:layout_toRightOf="@id/datumSelectieVan"
+            android:text="  /  /    "
+
+            />
+
+
+        <Button
+            android:id="@+id/datumTotKnop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/datumVanKnop"
+            android:layout_toRightOf="@id/datumSelectie"
+            android:onClick="showDialogCalender2"
+            android:text="Choose Date" />
+
+        <Spinner
+            android:id="@+id/categorie_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datumSelectieTot"
+            android:layout_marginTop="30dp" />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/wedstrijdenLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/keuzeOpties"
+        android:layout_centerHorizontal="true"
+
+        >
+
+        <!--android:onClick=""-->
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/getFromJson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/keuzeOpties"
+        android:layout_alignBottom="@+id/keuzeOpties"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:onClick="showWedstrijden"
+        android:text="Toon wedstrijd" />
+
+    <Button
+        android:id="@+id/toonInschrijvingen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/getFromJson"
+        android:layout_marginEnd="46dp"
+        android:layout_marginRight="46dp"
+        android:layout_marginTop="23dp"
+        android:onClick="toonInschrijvingen"
+        android:text="Toon inschrijvingen" />
+
+</RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_drawer"
+        app:menu="@menu/activity_main_drawer" />
+</android.support.v4.widget.DrawerLayout>

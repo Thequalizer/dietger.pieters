@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(date1.before(date2) || date1.getTime() == date2.getTime()) {
 
             String categorie = categorieSpinner.getSelectedItem().toString();
-            String url = "https://api.myjson.com/bins/z5xz3";
+            String url = "https://api.myjson.com/bins/17jwf7";
 
             List<Wedstrijd> wedstrijdenProfs = WedstrijdController.getWedstrijdenMetDatum(url, date1, date2, categorie);
 

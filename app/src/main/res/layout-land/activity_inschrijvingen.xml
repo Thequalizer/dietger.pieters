@@ -20,13 +20,13 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 
         />
+
     <ListView
+        android:id="@+id/list22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:id="@+id/list22"
-        />
+        android:layout_weight="1" />
 
     <RelativeLayout
         android:layout_width="wrap_content"

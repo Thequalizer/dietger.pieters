@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import dietgerpieters.werkstuk.Adapters.WedstrijdenAanbevolenAdapter;
 import dietgerpieters.werkstuk.Adapters.WedstrijdenAdapter;
+import dietgerpieters.werkstuk.Controllers.WedstrijdController;
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
@@ -54,17 +55,24 @@ public class InschrijvingenActivity extends AppCompatActivity {
 
 
         ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
-
+        ArrayList<Wedstrijd> myListAanbevolen = new ArrayList<>();
 
         if (myList.size() > 0) {
             //aanbevolen wedstrijd op categorie zoeken
             Wedstrijd.Categorie categorie = myList.get(0).getCategorie();
+            String url = "https://api.myjson.com/bins/17jwf7";
+
+            myListAanbevolen = (ArrayList<Wedstrijd>) WedstrijdController.getAanbevolenWedstrijden(categorie, url, myList);
+
+        } else {
+            myListAanbevolen = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
+
         }
 
 
 
-        WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(getApplicationContext(), R.layout.wedstrijd_row, myList);
-        WedstrijdenAanbevolenAdapter dAdapter = new WedstrijdenAanbevolenAdapter(getApplicationContext(), R.layout.wedstrijd_row_aanbevolen, myList);
+        WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(InschrijvingenActivity.this, R.layout.wedstrijd_row, myList);
+        WedstrijdenAanbevolenAdapter dAdapter = new WedstrijdenAanbevolenAdapter(InschrijvingenActivity.this, R.layout.wedstrijd_row_aanbevolen, myListAanbevolen);
 
 
         listview.setAdapter(wAdapter);
@@ -84,7 +92,12 @@ public class InschrijvingenActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         listview_aanbevolen.setAdapter(dAdapter);
+
+
         listview_aanbevolen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
