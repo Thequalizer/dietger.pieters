@@ -1,6 +1,9 @@
 package dietgerpieters.werkstuk.Activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.arch.persistence.room.Room;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -35,6 +38,8 @@ import java.util.Date;
 import java.util.List;
 
 import dietgerpieters.werkstuk.Controllers.WedstrijdController;
+import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Fragments.ChooseLoginRegisterFragment;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 import dietgerpieters.werkstuk.Threading.JsonTask;
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
     private TextView datumText;
     private TextView datumTextTot;
+
+    private AppDatabase mDb;
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -111,7 +118,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
 
+        this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
+
+
+        for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")){
+            if (mDb.wedstrijdDAO().getWedstrijd(wed1.getId()) == null){
+                mDb.wedstrijdDAO().insertWedstrijd(wed1);
+            }
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -123,18 +139,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-
         setTitle("CycleDroid");
 
 
-
+        initNavigationDrawer();
 
 
 
@@ -224,11 +232,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void initNavigationDrawer(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        String naam = mDb.userDAO().loadActiveUser().getNaam();
+        naam += " " + mDb.userDAO().loadActiveUser().getAchternaam();
+
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView textView_naam_menu = (TextView) headerView.findViewById(R.id.username_menu);
+
+
+        textView_naam_menu.setText(naam);
+
+
+
+    }
+
     public void showWedstrijden(View v) {
         String datumVan = datumText.getText().toString();
         String datumTot = datumTextTot.getText().toString();
         Date date1 = new Date();
         Date date2 = new Date();
+        String categorie = categorieSpinner.getSelectedItem().toString();
 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -245,10 +272,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(date1.before(date2) || date1.getTime() == date2.getTime()) {
 
-            String categorie = categorieSpinner.getSelectedItem().toString();
+            categorie = categorieSpinner.getSelectedItem().toString();
             String url = "https://api.myjson.com/bins/17jwf7";
 
+
+
+
+
             List<Wedstrijd> wedstrijdenProfs = WedstrijdController.getWedstrijdenMetDatum(url, date1, date2, categorie);
+
+
 
             wedstrijdenProfs = (ArrayList<Wedstrijd>) wedstrijdenProfs;
 
@@ -286,8 +319,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_mijn_ins){
-            toonInschrijvingen(new View(this));
+
+        switch (id){
+            case R.id.nav_mijn_ins:
+                toonInschrijvingen(new View(this));
+                break;
+            case R.id.nav_mijn_logout:
+                checkSureLogout();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -296,5 +335,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void checkSureLogout(){
+
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        //R.string.dialog_title
+        builder.setMessage("Ben je zeker dat je wilt afmelden")
+                .setTitle("Afmelden");
+
+        // 3. Get the AlertDialog from create()
+        AlertDialog dialog = builder.create();
+
+
+        // Add the buttons
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mDb.userDAO().logoutUser(mDb.userDAO().loadActiveUser().getNaam());
+                Intent intent = new Intent(MainActivity.this, LauncherActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Neen", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
 
 }

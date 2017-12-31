@@ -1,5 +1,7 @@
 package dietgerpieters.werkstuk.Controllers;
 
+import android.arch.persistence.room.Room;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.Threading.JsonTask;
 
@@ -25,6 +28,232 @@ import dietgerpieters.werkstuk.Threading.JsonTask;
 public class WedstrijdController {
     private static JsonTask jsonTask;
 
+    public static List<Wedstrijd> initWedstrijdDB(String url){
+        jsonTask = new JsonTask();
+        List<Wedstrijd> wedstrijden = new ArrayList<>();
+        Date datum = Calendar.getInstance().getTime();
+        Wedstrijd wedstrijd;
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonTask.execute(url).get());
+
+
+            JSONArray jsonArray1 =  jsonObject.getJSONArray("Profs");
+            SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+
+
+            for (int i=0; i < jsonArray1.length(); i++)
+            {
+
+                try {
+                    JSONObject oneObject = jsonArray1.getJSONObject(i);
+                    // Pulling items from the array
+                    String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                    String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+                    int pk = oneObject.getInt("id");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
+                    int afstand = Integer.parseInt(oneObjectsItem2);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.PROFS, pk);
+
+
+                    wedstrijden.add(wedstrijd);
+
+
+
+
+                } catch (JSONException e) {
+                    // Oops
+                }
+            }
+
+            jsonArray1 =  jsonObject.getJSONArray("Elite zonder contract");
+            for (int i=0; i < jsonArray1.length(); i++)
+            {
+
+                try {
+                    JSONObject oneObject = jsonArray1.getJSONObject(i);
+                    // Pulling items from the array
+                    String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                    String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+                    int pk = oneObject.getInt("id");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
+                    int afstand = Integer.parseInt(oneObjectsItem2);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.ELITEZC, pk);
+
+
+                    wedstrijden.add(wedstrijd);
+
+
+
+
+                } catch (JSONException e) {
+                    // Oops
+                }
+            }
+            jsonArray1 =  jsonObject.getJSONArray("Belofte");
+            for (int i=0; i < jsonArray1.length(); i++)
+            {
+
+                try {
+                    JSONObject oneObject = jsonArray1.getJSONObject(i);
+                    // Pulling items from the array
+                    String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                    String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+                    int pk = oneObject.getInt("id");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
+                    int afstand = Integer.parseInt(oneObjectsItem2);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.BELOFTEN, pk);
+
+
+                    wedstrijden.add(wedstrijd);
+
+
+
+
+                } catch (JSONException e) {
+                    // Oops
+                }
+            }
+            jsonArray1 =  jsonObject.getJSONArray("Junioren");
+            for (int i=0; i < jsonArray1.length(); i++)
+            {
+
+                try {
+                    JSONObject oneObject = jsonArray1.getJSONObject(i);
+                    // Pulling items from the array
+                    String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                    String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+                    int pk = oneObject.getInt("id");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
+                    int afstand = Integer.parseInt(oneObjectsItem2);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.JUNIOREN, pk);
+
+
+                    wedstrijden.add(wedstrijd);
+
+
+
+
+                } catch (JSONException e) {
+                    // Oops
+                }
+            }
+            jsonArray1 =  jsonObject.getJSONArray("Nieuwelingen");
+            for (int i=0; i < jsonArray1.length(); i++)
+            {
+
+                try {
+                    JSONObject oneObject = jsonArray1.getJSONObject(i);
+                    // Pulling items from the array
+                    String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                    String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+                    int pk = oneObject.getInt("id");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
+                    int afstand = Integer.parseInt(oneObjectsItem2);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.NIEUWELINGEN, pk);
+
+
+                    wedstrijden.add(wedstrijd);
+
+
+
+
+                } catch (JSONException e) {
+                    // Oops
+                }
+            }
+            jsonArray1 =  jsonObject.getJSONArray("Aspiranten");
+            for (int i=0; i < jsonArray1.length(); i++)
+            {
+
+                try {
+                    JSONObject oneObject = jsonArray1.getJSONObject(i);
+                    // Pulling items from the array
+                    String oneObjectsItem = oneObject.getString("wedstrijdNaam");
+                    String oneObjectsItem2 = oneObject.getString("afstand");
+                    String datumString = oneObject.getString("datum");
+                    int pk = oneObject.getInt("id");
+
+                    try {
+                        datum = dateFormat.parse(datumString);
+
+                    } catch (Exception e){
+                        //oopsie
+                    }
+
+
+                    int afstand = Integer.parseInt(oneObjectsItem2);
+                    wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.ASPIRANTEN, pk);
+
+
+                    wedstrijden.add(wedstrijd);
+
+
+
+
+                } catch (JSONException e) {
+                    // Oops
+                }
+            }
+            return wedstrijden;
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+
+    }
     public static List<Wedstrijd> getAanbevolenWedstrijden(Wedstrijd.Categorie categorie, String url, ArrayList<Wedstrijd> gekozenWedstrijden){
         jsonTask = new JsonTask();
         List<Wedstrijd> wedstrijden = new ArrayList<>();

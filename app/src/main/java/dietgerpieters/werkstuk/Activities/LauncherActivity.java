@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import dietgerpieters.werkstuk.Controllers.WedstrijdController;
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Fragments.ChooseLoginRegisterFragment;
+import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 
 public class LauncherActivity extends FragmentActivity {
@@ -21,6 +23,10 @@ public class LauncherActivity extends FragmentActivity {
         setContentView(R.layout.activity_launcher);
 
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
+
+
+
+
 
         checkForActiveLogin(savedInstanceState);
     }

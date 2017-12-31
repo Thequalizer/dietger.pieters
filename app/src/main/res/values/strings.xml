@@ -36,6 +36,7 @@
     <string name="gebruikersnaam">Gebruikersnaam</string>
     <string name="aanmelden">Aanmelden</string>
     <string name="register">Register</string>
+    <string name="afmelden">Afmelden</string>
 
 
 </resources>

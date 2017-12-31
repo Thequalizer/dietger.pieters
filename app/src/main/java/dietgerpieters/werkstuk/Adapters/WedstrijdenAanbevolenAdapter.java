@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import dietgerpieters.werkstuk.Activities.InschrijvingenActivity;
 import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 
@@ -37,7 +38,7 @@ public class WedstrijdenAanbevolenAdapter extends ArrayAdapter<Wedstrijd> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.wedstrijd_row_aanbevolen, parent, false);
 
-        Wedstrijd wed = list.get(position);
+        final Wedstrijd wed = list.get(position);
 
         TextView afstandView = (TextView) rowView.findViewById(R.id.afstandValue);
         TextView titelView = (TextView) rowView.findViewById(R.id.titelValue);
@@ -51,7 +52,8 @@ public class WedstrijdenAanbevolenAdapter extends ArrayAdapter<Wedstrijd> {
                 AppDatabase mDb = Room.databaseBuilder(getContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
                 ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 
-                mDb.wedstrijdDAO().insertWedstrijd(list.get(position));
+                mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().add(list.get(position));
+                mDb.usersRacesDAO().insertRelation(new TussenTabel(mDb.userDAO().loadActiveUser().getId(), wed.getId()));
 
                 notifyDataSetChanged();
 

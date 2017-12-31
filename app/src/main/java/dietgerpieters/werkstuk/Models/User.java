@@ -1,11 +1,14 @@
 package dietgerpieters.werkstuk.Models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import dietgerpieters.werkstuk.TypeConverters.CategorieConverter;
 import dietgerpieters.werkstuk.TypeConverters.DateConverter;
@@ -24,6 +27,9 @@ public class User implements Serializable {
     private int leeftijd;
     private String geslacht;
 
+    @Ignore
+    private List<Wedstrijd> ingeschrevenWedstrijden;
+
     private boolean ingelogd;
 
     public User(String naam, String achternaam, int leeftijd, String geslacht) {
@@ -31,6 +37,14 @@ public class User implements Serializable {
         this.achternaam = achternaam;
         this.leeftijd = leeftijd;
         this.geslacht = geslacht;
+        ingeschrevenWedstrijden = new ArrayList<>();
+    }
+    public List<Wedstrijd> getIngeschrevenWedstrijden() {
+        return ingeschrevenWedstrijden;
+    }
+
+    public void setIngeschrevenWedstrijden(List<Wedstrijd> ingeschrevenWedstrijden) {
+        this.ingeschrevenWedstrijden = ingeschrevenWedstrijden;
     }
 
     public String getNaam() {

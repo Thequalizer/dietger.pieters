@@ -5,5 +5,9 @@
         android:id="@+id/nav_mijn_ins"
         android:title="Mijn inschrijvingen"/>
 
+    <item
+        android:id="@+id/nav_mijn_logout"
+        android:title="@string/afmelden"/>
+
 
 </menu>

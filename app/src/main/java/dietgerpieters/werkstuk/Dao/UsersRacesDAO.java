@@ -4,28 +4,38 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.TypeConverters;
 
 import java.util.List;
 
+import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.User;
-import dietgerpieters.werkstuk.Models.Wedstrijd;
-import dietgerpieters.werkstuk.TypeConverters.CategorieConverter;
-import dietgerpieters.werkstuk.TypeConverters.DateConverter;
 
 /**
  * Created by Dietger (Pantani) on 22/12/2017.
  */
 
 @Dao
-public interface UserDAO {
+public interface UsersRacesDAO {
     @Insert
-    public void insertUser(User user);
+    public void insertRelation(TussenTabel tussenTabel);
     @Delete
-    public void deleteUser(User user);
-    @Query("SELECT * FROM users")
-    public List<User> loadAllUsers();
-    @Query("SELECT * FROM users WHERE id = :id")
+    public void deleteRelation(TussenTabel tussenTabel);
+    @Query("SELECT * FROM usersraces")
+    public List<TussenTabel> loadAllUsersRacesRelations();
+
+    @Query("SELECT * FROM usersraces WHERE userID = :id")
+    public List<TussenTabel> loadAllByUserID(int id);
+
+    @Query("SELECT * FROM usersraces WHERE wedstrijdID = :id AND userID = :id2")
+    public TussenTabel loadRelation(int id, int id2);
+
+    @Query("DELETE FROM usersraces WHERE wedstrijdID = :id AND userID = :id2")
+    public void deleteRelation2(int id, int id2);
+
+
+
+
+/*
     public User getUser(int id);
     @Query("SELECT * FROM users WHERE naam = :naam")
     public User getUserByName(String naam);
@@ -37,7 +47,7 @@ public interface UserDAO {
     public void logoutUser(String naam);
     @Query("SELECT * FROM users WHERE ingelogd = 1")
     public User loadActiveUser();
-
+   */
 
 
 

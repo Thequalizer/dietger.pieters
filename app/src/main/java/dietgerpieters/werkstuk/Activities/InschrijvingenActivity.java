@@ -20,6 +20,7 @@ import dietgerpieters.werkstuk.Adapters.WedstrijdenAanbevolenAdapter;
 import dietgerpieters.werkstuk.Adapters.WedstrijdenAdapter;
 import dietgerpieters.werkstuk.Controllers.WedstrijdController;
 import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 
@@ -50,11 +51,16 @@ public class InschrijvingenActivity extends AppCompatActivity {
 
         ListView listview_aanbevolen = (ListView) findViewById(R.id.list222);
 
+        ArrayList<TussenTabel> myListje = (ArrayList<TussenTabel>) mDb.usersRacesDAO().loadAllByUserID(mDb.userDAO().loadActiveUser().getId()) ;
+        ArrayList<Wedstrijd> myList = new ArrayList<>();
+
+
+        for (TussenTabel t : myListje){
+            myList.add(mDb.wedstrijdDAO().getWedstrijd(t.getWedstrijdID()));
+        }
 
 
 
-
-        ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
         ArrayList<Wedstrijd> myListAanbevolen = new ArrayList<>();
 
         if (myList.size() > 0) {
@@ -79,7 +85,14 @@ public class InschrijvingenActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
+                ArrayList<TussenTabel> myListje = (ArrayList<TussenTabel>) mDb.usersRacesDAO().loadAllByUserID(mDb.userDAO().loadActiveUser().getId()) ;
+                ArrayList<Wedstrijd> myList = new ArrayList<>();
+
+
+                for (TussenTabel t : myListje){
+                    myList.add(mDb.wedstrijdDAO().getWedstrijd(t.getWedstrijdID()));
+                    mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().add(mDb.wedstrijdDAO().getWedstrijd(t.getWedstrijdID()));
+                }
 
 
 

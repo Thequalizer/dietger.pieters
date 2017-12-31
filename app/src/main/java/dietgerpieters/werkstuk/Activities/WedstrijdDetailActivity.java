@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 
@@ -97,16 +98,9 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
     }
 
     private void initButtons(){
-        w.getId();
-        mDb.wedstrijdDAO().loadAllWedstrijden();
 
 
-
-
-        Wedstrijd wed = mDb.wedstrijdDAO().getWedstrijd(w.getId());
-
-
-        if (wed == null) {
+        if (mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null) {
             inschrBtn.setEnabled(true);
             uitschrBtn.setEnabled(false);
         } else {
@@ -120,19 +114,39 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
 
     public void inschrijvingWedstrijd(View v){
 
+        if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null){
 
-        if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) == null) {
-            mDb.wedstrijdDAO().insertWedstrijd(w);
+            mDb.usersRacesDAO().insertRelation(new TussenTabel(mDb.userDAO().loadActiveUser().getId(), w.getId()));
+            mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().add(w);
             inschrBtn.setEnabled(false);
             uitschrBtn.setEnabled(true);
         } else {
             Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
+
         }
+
+     /*   if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) == null) {
+
+
+
+            mDb.wedstrijdDAO().insertWedstrijd(w);
+
+
+
+
+            inschrBtn.setEnabled(false);
+            uitschrBtn.setEnabled(true);
+        } else {
+            Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
+        }*/
 
     }
     public void uitschrijvingWedstrijd(View v){
-        if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) != null) {
-            mDb.wedstrijdDAO().deleteWedstrijd(w);
+        if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) != null) {
+
+            mDb.usersRacesDAO().deleteRelation2(mDb.userDAO().loadActiveUser().getId(), w.getId());
+            mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().remove(w);
+
             inschrBtn.setEnabled(true);
             uitschrBtn.setEnabled(false);
         } else {
