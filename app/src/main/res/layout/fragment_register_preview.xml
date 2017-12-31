@@ -86,6 +86,7 @@
         android:id="@+id/register_now"
         android:text="@string/ok"
         android:layout_below="@id/Geslacht"
+        android:onClick="doRegister"
         android:layout_centerHorizontal="true"
         />
 

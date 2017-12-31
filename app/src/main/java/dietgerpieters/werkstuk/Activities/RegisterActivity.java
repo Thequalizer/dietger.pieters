@@ -1,5 +1,7 @@
 package dietgerpieters.werkstuk.Activities;
 
+import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,14 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Fragments.PreviewRegisterInputFragment;
 import dietgerpieters.werkstuk.Fragments.RegisterInputFragment;
+import dietgerpieters.werkstuk.Models.User;
 import dietgerpieters.werkstuk.R;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterInputFragment.OnUserRegisterListener{
 
+    private AppDatabase mDb;
     private NumberPicker np;
     private Button registerBtn;
     private EditText naamEdit;
@@ -36,6 +42,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
     }
 
     private void initComponents(){
+
+        this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
         np = (NumberPicker) findViewById(R.id.input_age);
 
@@ -91,6 +99,31 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
             pFragment.updateValues(naam, achternaam, leeftijd, geslacht);
 
 
+        }
+    }
+
+    public void doRegister(View v){
+        TextView naam = (TextView) findViewById(R.id.naam_info);
+        String tNaam = naam.getText().toString();
+        TextView aNaam = (TextView) findViewById(R.id.achternaam_info);
+        String tANaam = aNaam.getText().toString();
+        TextView leeftijd = (TextView) findViewById(R.id.leeftijd_info);
+        int tLeeftijd = Integer.parseInt(leeftijd.getText().toString());
+        TextView geslacht = (TextView) findViewById(R.id.geslacht_info);
+        String tGeslacht = geslacht.getText().toString();
+
+        User user = new User(tNaam, tANaam, tLeeftijd, tGeslacht);
+
+
+        if (mDb.userDAO().getUserByName(user.getNaam()) == null){
+            mDb.userDAO().insertUser(user);
+
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            intent.putExtra("Username", user.getNaam());
+            startActivity(intent);
+
+        } else {
+            Toast.makeText(RegisterActivity.this, "Een user met deze naam bestaat al", Toast.LENGTH_SHORT).show();
         }
     }
 }

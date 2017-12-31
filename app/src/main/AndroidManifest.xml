@@ -36,13 +36,15 @@
             android:label="@string/title_activity_drawer"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Activities.RegisterActivity">
+
+        </activity>
+        <activity android:name=".Activities.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LauncherActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.PreferenceActivity"></activity>
     </application>
