@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Werkstuk</string>
+    <string name="app_name">CycleDroid Inschrijvingen</string>
     <string name="overzicht">Overzicht: </string>
     <string name="Afstand">Afstand</string>
     <string name="action_settings">search_title</string>

@@ -45,7 +45,7 @@ public class WedstrijdController {
                     catAfterToString = "Elite zonder contract";
                     break;
                 case BELOFTEN:
-                    catAfterToString = "Beloften";
+                    catAfterToString = "Belofte";
                     break;
                 case JUNIOREN:
                     catAfterToString = "Junioren";
@@ -137,7 +137,7 @@ public class WedstrijdController {
                 case "Elite zonder contract":
                     categorie1 = Wedstrijd.Categorie.ELITEZC;
                     break;
-                case "Beloften":
+                case "Belofte":
                     categorie1 = Wedstrijd.Categorie.BELOFTEN;
                     break;
                 case "Junioren":

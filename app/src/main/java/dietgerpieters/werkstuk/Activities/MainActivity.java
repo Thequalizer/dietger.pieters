@@ -120,12 +120,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
+
+
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
 
 
+
+        setTitle("CycleDroid");
 
 
 
@@ -143,6 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         btnHit.setEnabled(false);
         setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setIcon(R.drawable.ic_actionbarlogo);
+
 
         Spinner spinner = (Spinner) findViewById(R.id.categorie_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
