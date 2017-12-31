@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/naam"
+        android:id="@+id/input_naam"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_naam"
+        android:hint="@string/achternaam"
+        android:layout_marginTop="10dp"
+        android:id="@+id/input_achternaam"
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_achternaam"
+        android:id="@+id/text_gender"
+        android:layout_alignParentLeft="true"
+        android:textSize="20sp"
+        android:text="@string/geslacht"
+        />
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_gender"
+            android:layout_toRightOf="@id/text_gender"
+            android:layout_below="@id/input_achternaam"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_age"
+            android:layout_below="@id/text_gender"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:text="@string/leeftijd"
+            />
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_age"
+        android:layout_below="@id/input_gender"
+        android:layout_toRightOf="@id/text_age"
+        android:layout_marginLeft="30dp"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/send_register"
+        android:text="Register"
+        android:layout_below="@id/input_age"
+        android:layout_centerHorizontal="true"
+        android:onClick="onRegisterButtonListener"
+        />
+
+</RelativeLayout>
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/naam"
+        android:text="@string/naam"
+        android:textSize="25sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/achternaam"
+        android:text="@string/achternaam"
+        android:textSize="25sp"
+        android:layout_below="@id/naam"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/leeftijd"
+        android:text="@string/leeftijd"
+        android:textSize="25sp"
+        android:layout_below="@id/achternaam"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Geslacht"
+        android:text="@string/geslacht"
+        android:textSize="25sp"
+        android:layout_below="@id/leeftijd"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/naam_info"
+        android:textSize="25sp"
+        android:layout_toRightOf="@id/naam"
+        android:layout_marginLeft="90dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/achternaam_info"
+        android:textSize="25sp"
+        android:layout_toRightOf="@id/achternaam"
+        android:layout_marginLeft="21dp"
+        android:layout_below="@id/naam_info"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/leeftijd_info"
+        android:textSize="25sp"
+        android:layout_toRightOf="@id/leeftijd"
+        android:layout_marginLeft="75dp"
+        android:layout_below="@id/achternaam_info"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/geslacht_info"
+        android:textSize="25sp"
+        android:layout_toRightOf="@id/Geslacht"
+        android:layout_marginLeft="54dp"
+        android:layout_below="@id/leeftijd_info"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_now"
+        android:text="@string/ok"
+        android:layout_below="@id/Geslacht"
+        android:layout_centerHorizontal="true"
+        />
+
+
+</RelativeLayout>
+

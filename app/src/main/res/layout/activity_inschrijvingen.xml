@@ -62,14 +62,7 @@
     </RelativeLayout>
 
 
-   <!-- <fragment
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_aanbevolen"
-        android:name="dietgerpieters.werkstuk.Fragments.AanbevolenFragment"
-        android:layout_below="@+id/streepje"
-        android:layout_weight="1"
-        />-->
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

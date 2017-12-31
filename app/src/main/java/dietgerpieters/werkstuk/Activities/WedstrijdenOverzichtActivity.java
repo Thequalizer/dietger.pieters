@@ -1,6 +1,7 @@
 package dietgerpieters.werkstuk.Activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,5 +91,17 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
 
     }
 
+    private void initLayout(){
+        if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            Toast.makeText(this, "Large screen",Toast.LENGTH_LONG).show();
+
+        }
+        else{
+
+            
+        }
+
+
+    }
 
 }

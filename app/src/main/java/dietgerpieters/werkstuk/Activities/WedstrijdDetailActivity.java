@@ -141,12 +141,5 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
 
     }
 
-    private void initFragments(){
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
-
-    }
 }
