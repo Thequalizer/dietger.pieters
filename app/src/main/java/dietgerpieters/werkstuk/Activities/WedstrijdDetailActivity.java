@@ -114,9 +114,13 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
 
     public void inschrijvingWedstrijd(View v){
 
+        TussenTabel t = null;
+
         if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null){
 
-            mDb.usersRacesDAO().insertRelation(new TussenTabel(mDb.userDAO().loadActiveUser().getId(), w.getId()));
+            t = new TussenTabel(mDb.userDAO().loadActiveUser().getId(), w.getId());
+
+            mDb.usersRacesDAO().insertRelation(t);
             mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().add(w);
             inschrBtn.setEnabled(false);
             uitschrBtn.setEnabled(true);

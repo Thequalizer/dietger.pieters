@@ -27,10 +27,15 @@ public interface UsersRacesDAO {
     public List<TussenTabel> loadAllByUserID(int id);
 
     @Query("SELECT * FROM usersraces WHERE wedstrijdID = :id AND userID = :id2")
-    public TussenTabel loadRelation(int id, int id2);
+    public TussenTabel loadRelation(int id2, int id);
 
     @Query("DELETE FROM usersraces WHERE wedstrijdID = :id AND userID = :id2")
     public void deleteRelation2(int id, int id2);
+
+    /*
+    not supported yet.................. #failroom
+    @Query("INSERT INTO usersraces (userID, wedstrijdID) VALUES (:id,:id2)")
+    public void insertRelation2(int id, int id2);*/
 
 
 
