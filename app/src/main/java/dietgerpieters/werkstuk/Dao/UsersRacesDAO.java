@@ -30,7 +30,7 @@ public interface UsersRacesDAO {
     public TussenTabel loadRelation(int id2, int id);
 
     @Query("DELETE FROM usersraces WHERE wedstrijdID = :id AND userID = :id2")
-    public void deleteRelation2(int id, int id2);
+    public void deleteRelation2(int id2, int id);
 
     /*
     not supported yet.................. #failroom
