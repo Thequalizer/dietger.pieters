@@ -1,6 +1,7 @@
 package dietgerpieters.werkstuk.Fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
@@ -22,23 +24,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.DirectionsApi;
+import com.google.maps.DistanceMatrixApi;
+import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
+import com.google.maps.GeolocationApi;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.TravelMode;
 
@@ -48,11 +57,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import dietgerpieters.werkstuk.Controllers.WedstrijdController;
 import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Models.MyTaskParam;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
+import dietgerpieters.werkstuk.Threading.InitMapTask;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.LOCATION_SERVICE;
@@ -70,6 +83,9 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     private static AppDatabase mDb;
     private LocationManager mLocationManager;
     private static LatLng latLngCurrent;
+    private static Geocoder gc;
+    private DistanceMatrixApiRequest distanceMatrixApiRequest;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +97,8 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.map2);
         mapFragment.getMapAsync(this);
 
+
+
         // Inflate the layout for this fragment
         return view;
 
@@ -89,6 +107,7 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        this.gc = new Geocoder(getContext(), Locale.getDefault());
 
         mDb = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
@@ -96,7 +115,6 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
         w = (Wedstrijd) extras.getSerializable("wedstrijd");
 
 
-        mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -112,10 +130,13 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
             // for ActivityCompat#requestPermissions for more details.
 
         } else {
+            mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
             mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Long.valueOf("1"), Float.valueOf("5"), mLocationListener);
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Long.valueOf("1"), Float.valueOf("5"), mLocationListener);
 
         }
+
+
     }
 
     @Override
@@ -138,69 +159,87 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        InitMapTask task = new InitMapTask();
 
+        try {
+            this.mMap = task.execute(new MyTaskParam(w,mMap)).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         mMap.moveCamera(CameraUpdateFactory.zoomTo(9));
 
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        GeoApiContext context = new GeoApiContext.Builder()
-                .apiKey("AIzaSyCJOitdqPwgXCgIPw0__SRt64lfKFHp_xw")
-                .build();
-
-
-        GeocodingResult[] geocodingApiRequest = null;
-        try {
-            geocodingApiRequest = GeocodingApi.geocode(context, "Alsemberg").await();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(gson.toJson(geocodingApiRequest));
-
-        GeocodingResult[] geocodingResult = new GeocodingResult[0];
-        try {
-            geocodingResult = GeocodingApi.geocode(context, "Alsemberg").await();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(gson.toJson(geocodingResult[0].geometry.location.lat));
-        System.out.println(gson.toJson(geocodingResult[0].geometry.location.lng));
-
-        LatLng sydney = new LatLng(Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lat)), Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lng)));
-
-
-        GeocodingResult[] results = new GeocodingResult[0];
-        try {
-            /*
-            * String vAdres = w.getVertrekAdres();
-            *
-            * */
-            results = GeocodingApi.geocode(context, "Alsemberg").await();
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(gson.toJson(results[0].geometry));
-
-
         // Add a marker in Sydney and move the camera
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Vertrek"));
+        Marker marker = googleMap.addMarker(new MarkerOptions().position(latLngCurrent).title("Marker in Vertrek").snippet(w.getVertrekAdres()));
+        marker.showInfoWindow();
+
+/*      if (WedstrijdController.isInternetAvailable()) {
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            GeoApiContext context = new GeoApiContext.Builder()
+                    .apiKey("AIzaSyCJOitdqPwgXCgIPw0__SRt64lfKFHp_xw")
+                    .build();
+
+
+            GeocodingResult[] geocodingApiRequest = null;
+            try {
+                geocodingApiRequest = GeocodingApi.geocode(context, "Alsemberg").await();
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(gson.toJson(geocodingApiRequest));
+
+            GeocodingResult[] geocodingResult = new GeocodingResult[0];
+            try {
+                geocodingResult = GeocodingApi.geocode(context, "Alsemberg").await();
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(gson.toJson(geocodingResult[0].geometry.location.lat));
+            System.out.println(gson.toJson(geocodingResult[0].geometry.location.lng));
+
+            LatLng sydney = new LatLng(Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lat)), Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lng)));
+
+
+            GeocodingResult[] results = new GeocodingResult[0];
+            try {
+
+                String vAdres = w.getVertrekAdres();
+
+
+                results = GeocodingApi.geocode(context, "Alsemberg").await();
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(gson.toJson(results[0].geometry));
+
+
+            // Add a marker in Sydney and move the camera
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Vertrek"));
+
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        } else {
+            Toast.makeText(getContext(), "Er is geen internet verbinding", Toast.LENGTH_LONG);
+
+        }*/
     }
 
 
@@ -220,6 +259,8 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
 
 
 
+
+
             DateTime now = new DateTime();
             try {
 
@@ -232,7 +273,7 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
                 double lon = location.getLongitude();
                 int maxResults = 1;
 
-                Geocoder gc = new Geocoder(getContext(), Locale.getDefault());
+
                 List<Address> addresses = gc.getFromLocation(lat, lon, maxResults);
 
 
@@ -249,10 +290,28 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
                         addressFragments.add(address.getAddressLine(i));
                     }
 
-                    DirectionsResult result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.DRIVING).origin(TextUtils.join(System.getProperty("line.separator"),
-                            addressFragments)).destination("Beitem").departureTime(now).await();
+                    String[] origin = {TextUtils.join(System.getProperty("line.separator"),
+                            addressFragments)};
+                    String[] vertrekAdres = {w.getVertrekAdres()};
+
+                    DirectionsResult result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.DRIVING).origin(origin[0]).destination(w.getVertrekAdres()).departureTime(now).await();
 
                     addPolyline(result,mMap);
+
+
+                    DistanceMatrix distanceMatrix;
+                    distanceMatrixApiRequest = DistanceMatrixApi.getDistanceMatrix(getGeoContext(), origin, vertrekAdres);
+
+                    GeolocationApi.Response response = new GeolocationApi.Response();
+
+
+
+
+                    // Add a marker in Sydney and move the camera
+                    Marker marker = mMap.addMarker(new MarkerOptions().
+                            position(new LatLng(lat,lon)).title("Marker in Vertrek").snippet("Reisduur: " + distanceMatrixApiRequest.));
+                    marker.showInfoWindow();
+
                 }
 
 
@@ -293,6 +352,9 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     }
     private void addPolyline(DirectionsResult results, GoogleMap mMap) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[0].overviewPolyline.getEncodedPath());
+        Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
+        polyline.remove();
+
         mMap.addPolyline(new PolylineOptions().addAll(decodedPath));
     }
 }

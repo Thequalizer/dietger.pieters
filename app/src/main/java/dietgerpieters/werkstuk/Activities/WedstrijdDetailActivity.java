@@ -27,6 +27,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.concurrent.ExecutionException;
+
 import dietgerpieters.werkstuk.Adapters.DetailPagerAdapter;
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Fragments.DetailTabFragment;
@@ -35,10 +37,10 @@ import dietgerpieters.werkstuk.Listeners.TabListener;
 import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
+import dietgerpieters.werkstuk.Threading.InitMapTask;
 
-public class WedstrijdDetailActivity extends AppCompatActivity implements OnMapReadyCallback, DetailTabFragment.OnFragmentInteractionListener, MapsTabFragment.OnFragmentInteractionListener {
+public class WedstrijdDetailActivity extends AppCompatActivity implements DetailTabFragment.OnFragmentInteractionListener, MapsTabFragment.OnFragmentInteractionListener {
 
-    private GoogleMap mMap;
     private AppDatabase mDb;
     Wedstrijd w;
 
@@ -55,6 +57,8 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements OnMapR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
+
+
 
         Bundle extras = getIntent().getExtras();
         w = (Wedstrijd) extras.getSerializable("wedstrijd");
@@ -223,15 +227,6 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements OnMapR
     }
 
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {

@@ -1,11 +1,16 @@
 package dietgerpieters.werkstuk.Controllers;
 
 import android.arch.persistence.room.Room;
+import android.os.AsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
+import java.net.InetAddress;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -17,9 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import dietgerpieters.werkstuk.Database.AppDatabase;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.Threading.JsonTask;
+import dietgerpieters.werkstuk.Threading.RetrieveInternetTask;
 
 /**
  * Created by User on 6/12/2017.
@@ -51,6 +60,10 @@ public class WedstrijdController {
                     String oneObjectsItem = oneObject.getString("wedstrijdNaam");
                     String oneObjectsItem2 = oneObject.getString("afstand");
                     String datumString = oneObject.getString("datum");
+                    String vertrekString = oneObject.getString("vertrekGemeente");
+                    String aankomstString = oneObject.getString("aankomstGemeente");
+
+
                     int pk = oneObject.getInt("id");
 
                     try {
@@ -63,7 +76,8 @@ public class WedstrijdController {
 
                     int afstand = Integer.parseInt(oneObjectsItem2);
                     wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.PROFS, pk);
-
+                    wedstrijd.setVertrekAdres(vertrekString);
+                    wedstrijd.setAankomstAdres(aankomstString);
 
                     wedstrijden.add(wedstrijd);
 
@@ -85,6 +99,10 @@ public class WedstrijdController {
                     String oneObjectsItem = oneObject.getString("wedstrijdNaam");
                     String oneObjectsItem2 = oneObject.getString("afstand");
                     String datumString = oneObject.getString("datum");
+                    String vertrekString = oneObject.getString("vertrekGemeente");
+                    String aankomstString = oneObject.getString("aankomstGemeente");
+
+
                     int pk = oneObject.getInt("id");
 
                     try {
@@ -97,7 +115,8 @@ public class WedstrijdController {
 
                     int afstand = Integer.parseInt(oneObjectsItem2);
                     wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, Wedstrijd.Categorie.ELITEZC, pk);
-
+                    wedstrijd.setAankomstAdres(aankomstString);
+                    wedstrijd.setVertrekAdres(vertrekString);
 
                     wedstrijden.add(wedstrijd);
 
@@ -391,6 +410,9 @@ public class WedstrijdController {
                     String oneObjectsItem = oneObject.getString("wedstrijdNaam");
                     String oneObjectsItem2 = oneObject.getString("afstand");
                     String datumString = oneObject.getString("datum");
+                    String vertrekString = oneObject.getString("vertrekGemeente");
+                    String aankomstString = oneObject.getString("aankomstGemeente");
+
                     int pk = oneObject.getInt("id");
 
                     try {
@@ -403,7 +425,8 @@ public class WedstrijdController {
 
                     int afstand = Integer.parseInt(oneObjectsItem2);
                     wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, categorie1, pk);
-
+                    wedstrijd.setAankomstAdres(aankomstString);
+                    wedstrijd.setVertrekAdres(vertrekString);
 
 
 
@@ -426,4 +449,20 @@ public class WedstrijdController {
         }
         return null;
     }
+    public static boolean isInternetAvailable() {
+        RetrieveInternetTask task = new RetrieveInternetTask();
+        boolean isOnline = false;
+        String url = "www.google.com";
+
+        try {
+            isOnline = task.execute(url).get().booleanValue();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return isOnline;
+    }
+
 }
+
