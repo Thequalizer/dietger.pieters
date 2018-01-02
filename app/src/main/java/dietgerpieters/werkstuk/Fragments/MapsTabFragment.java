@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +81,22 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     private DistanceMatrixApiRequest distanceMatrixApiRequest;
     private Marker mVertrekMarker;
     private Marker mCurrentPosMarker;
+    private final int REQUESTCODE = 123;
 
+    public boolean checkPermission(){
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ){//Can add more as per requirement
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUESTCODE);
+            return false
+        }
+        else {
+            return true;
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,95 +168,29 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        if (checkPermission()) {
+            mMap = googleMap;
 
 
-        InitMapTask task = new InitMapTask();
+            InitMapTask task = new InitMapTask();
 
-        try {
-            if (WedstrijdController.isInternetAvailable())
-                myTaskParam = task.execute(new MyTaskParam(w,mMap)).get();
+            try {
+                if (WedstrijdController.isInternetAvailable())
+                    myTaskParam = task.execute(new MyTaskParam(w, mMap)).get();
 
-            if (myTaskParam != null){
+                if (myTaskParam != null) {
 
-                this.mMap = myTaskParam.getGoogleMap();
+                    this.mMap = myTaskParam.getGoogleMap();
+                }
+
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
-
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
         }
-
-
-/*      if (WedstrijdController.isInternetAvailable()) {
-
-
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            GeoApiContext context = new GeoApiContext.Builder()
-                    .apiKey("AIzaSyCJOitdqPwgXCgIPw0__SRt64lfKFHp_xw")
-                    .build();
-
-
-            GeocodingResult[] geocodingApiRequest = null;
-            try {
-                geocodingApiRequest = GeocodingApi.geocode(context, "Alsemberg").await();
-            } catch (ApiException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(gson.toJson(geocodingApiRequest));
-
-            GeocodingResult[] geocodingResult = new GeocodingResult[0];
-            try {
-                geocodingResult = GeocodingApi.geocode(context, "Alsemberg").await();
-            } catch (ApiException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(gson.toJson(geocodingResult[0].geometry.location.lat));
-            System.out.println(gson.toJson(geocodingResult[0].geometry.location.lng));
-
-            LatLng sydney = new LatLng(Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lat)), Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lng)));
-
-
-            GeocodingResult[] results = new GeocodingResult[0];
-            try {
-
-                String vAdres = w.getVertrekAdres();
-
-
-                results = GeocodingApi.geocode(context, "Alsemberg").await();
-            } catch (ApiException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(gson.toJson(results[0].geometry));
-
-
-            // Add a marker in Sydney and move the camera
-            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Vertrek"));
-
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        } else {
-            Toast.makeText(getContext(), "Er is geen internet verbinding", Toast.LENGTH_LONG);
-
-        }*/
     }
-
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
