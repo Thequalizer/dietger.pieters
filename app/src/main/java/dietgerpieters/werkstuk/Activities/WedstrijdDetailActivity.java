@@ -1,7 +1,9 @@
 package dietgerpieters.werkstuk.Activities;
 
 import android.arch.persistence.room.Room;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -43,7 +45,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
 
     private AppDatabase mDb;
     Wedstrijd w;
-
+    private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     ActionBar.Tab Tab1, Tab2;
     Fragment fragmentMapsTab = new MapsTabFragment();
@@ -57,6 +59,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
+
 
 
 
@@ -232,4 +235,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
+
 }

@@ -46,6 +46,7 @@ import dietgerpieters.werkstuk.Fragments.ChooseLoginRegisterFragment;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 import dietgerpieters.werkstuk.Threading.JsonTask;
+import dietgerpieters.werkstuk.TypeConverters.CategorieConverter;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -131,18 +132,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
 
+        if (WedstrijdController.isInternetAvailable()) {
 
-        try {
-            for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")){
-            if (mDb.wedstrijdDAO().getWedstrijd(wed1.getId()) == null){
-                mDb.wedstrijdDAO().insertWedstrijd(wed1);
-            }
 
-            }
-        } catch (NullPointerException e){
-            System.out.println("No Wedstrijden found");
+                try {
+                    for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")) {
+                        if (mDb.wedstrijdDAO().getWedstrijd(wed1.getId()) == null) {
+                            mDb.wedstrijdDAO().insertWedstrijd(wed1);
+                        }
+
+                    }
+                } catch (NullPointerException e) {
+                    System.out.println("No Wedstrijden found");
+                }
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -289,34 +292,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             categorie = categorieSpinner.getSelectedItem().toString();
             String url = "https://api.myjson.com/bins/17jwf7";
 
+            List<Wedstrijd> wedstrijden = new ArrayList<>();
+
+            if (WedstrijdController.isInternetAvailable())
+                wedstrijden = WedstrijdController.getWedstrijdenMetDatum(url, date1, date2, categorie);
+            else
+                wedstrijden = mDb.wedstrijdDAO().loadAllOnCategorie(CategorieConverter.toCategorie(categorie));
 
 
 
-
-            List<Wedstrijd> wedstrijdenProfs = WedstrijdController.getWedstrijdenMetDatum(url, date1, date2, categorie);
-
-
-
-            wedstrijdenProfs = (ArrayList<Wedstrijd>) wedstrijdenProfs;
-
-            for (int i = 0; i < wedstrijdenProfs.size(); i++) {
-
-
-                Wedstrijd w = wedstrijdenProfs.get(i);
-                // Pulling items from the array
-
-
-                System.out.println(w.getAantalDeelnemers());
-                System.out.println(w.getTitel());
-                System.out.println(w.getVertrekDatum());
-
-
-            }
 
 
             Intent myIntent = new Intent(MainActivity.this, WedstrijdenOverzichtActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("wedstrijdenLijst", (Serializable) wedstrijdenProfs);
+            bundle.putSerializable("wedstrijdenLijst", (Serializable) wedstrijden);
 
             myIntent.putExtras(bundle); //Optional parameters
 

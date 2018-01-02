@@ -68,8 +68,10 @@ public class InschrijvingenActivity extends AppCompatActivity {
             Wedstrijd.Categorie categorie = myList.get(0).getCategorie();
             String url = "https://api.myjson.com/bins/17jwf7";
 
-            myListAanbevolen = (ArrayList<Wedstrijd>) WedstrijdController.getAanbevolenWedstrijden(categorie, url, myList);
-
+            if (WedstrijdController.isInternetAvailable())
+                myListAanbevolen = (ArrayList<Wedstrijd>) WedstrijdController.getAanbevolenWedstrijden(categorie, url, myList);
+            else
+                Toast.makeText(this, "Geen internet = geen aanbevolen wedstrijden", Toast.LENGTH_SHORT).show();
         } else {
             myListAanbevolen = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
 

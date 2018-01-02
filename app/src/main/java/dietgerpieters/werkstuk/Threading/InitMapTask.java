@@ -28,11 +28,12 @@ import dietgerpieters.werkstuk.Models.Wedstrijd;
  * Created by User on 2/01/2018.
  */
 
-public class InitMapTask extends AsyncTask<MyTaskParam, Void, GoogleMap> {
+public class InitMapTask extends AsyncTask<MyTaskParam, Void, MyTaskParam> {
 
     private LatLng latLng;
     private boolean aBoolean;
     private Wedstrijd w;
+    private MyTaskParam myTaskParam;
     private DistanceMatrixApiRequest distanceMatrixApiRequest;
 
     @Override
@@ -44,11 +45,12 @@ public class InitMapTask extends AsyncTask<MyTaskParam, Void, GoogleMap> {
 
     }
 
-    protected GoogleMap doInBackground(MyTaskParam... googleMaps) {
+    protected MyTaskParam doInBackground(MyTaskParam... googleMaps) {
 
         GoogleMap googleMap = googleMaps[0].getGoogleMap();
         String adres = googleMaps[0].getW().getVertrekAdres();
         w = googleMaps[0].getW();
+        myTaskParam = googleMaps[0];
 
         if (aBoolean) {
 
@@ -61,7 +63,6 @@ public class InitMapTask extends AsyncTask<MyTaskParam, Void, GoogleMap> {
 
 
             GeocodingResult[] geocodingResult = new GeocodingResult[0];
-
 
 
 
@@ -87,22 +88,22 @@ public class InitMapTask extends AsyncTask<MyTaskParam, Void, GoogleMap> {
 
             latLng = sydney;
 
-            return googleMap;
+             myTaskParam.setLatLng(sydney);
+            return myTaskParam;
         }
         return null;
     }
 
     @Override
-    protected void onPostExecute(GoogleMap googleMap) {
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(9));
+    protected void onPostExecute(MyTaskParam googleMap1) {
 
 
-        /*// Add a marker in Sydney and move the camera
-        Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Vertrek").snippet(w.getVertrekAdres()));
-        marker.showInfoWindow();*/
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        myTaskParam.getGoogleMap().moveCamera(CameraUpdateFactory.zoomTo(9));
 
-        super.onPostExecute(googleMap);
+
+        myTaskParam.getGoogleMap().moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        super.onPostExecute(myTaskParam);
 
 
 

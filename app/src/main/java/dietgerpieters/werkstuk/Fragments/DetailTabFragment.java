@@ -1,7 +1,9 @@
 package dietgerpieters.werkstuk.Fragments;
 
 import android.arch.persistence.room.Room;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,23 +15,31 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import dietgerpieters.werkstuk.Activities.WedstrijdDetailActivity;
+import dietgerpieters.werkstuk.Controllers.WedstrijdController;
 import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Models.MyAgendaTaskParams;
 import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
+import dietgerpieters.werkstuk.Threading.AgendaTask;
 
 /**
  * Created by Dietger (Pantani) on 31/12/2017.
  */
 
 public class DetailTabFragment extends Fragment {
+
+    private ContentResolver mCr;
     private static AppDatabase mDb;
     private static Button inschrBtn;
     private static Button uitschrBtn;
     private static Wedstrijd w;
     private static String parentName;
     private ViewGroup viewGroup;
+    private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     private OnFragmentInteractionListener mListener;
     private Button button;
@@ -91,6 +101,47 @@ public class DetailTabFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                    //agenda toevoegen/////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                } else {
+
+
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
 
     public  void inschrijvingWedstrijd(View v){
@@ -106,6 +157,18 @@ public class DetailTabFragment extends Fragment {
             mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().add(w);
             inschrBtn.setEnabled(false);
             uitschrBtn.setEnabled(true);
+
+            if (WedstrijdController.isInternetAvailable()) {
+                AgendaTask agendaTask = new AgendaTask();
+
+
+                agendaTask.execute(new MyAgendaTaskParams(getActivity(), w, getActivity().getApplicationContext().getContentResolver(), 1, w.getVertrekDatum().getTime(), w.getVertrekDatum().getTime(), Calendar.getInstance(), Calendar.getInstance()));
+            }
+
+
+
+
+
         } else {
             Toast.makeText(getActivity(), "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
 

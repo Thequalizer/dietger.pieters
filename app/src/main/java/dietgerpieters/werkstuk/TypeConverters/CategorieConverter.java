@@ -14,17 +14,17 @@ public class CategorieConverter {
     @TypeConverter
     public static Wedstrijd.Categorie toCategorie(String categorie){
         switch (categorie){
-            case "PROFS":
+            case "Profs":
                 return Wedstrijd.Categorie.PROFS;
-            case "ELITEZC":
+            case "Elite zonder contract":
                 return Wedstrijd.Categorie.ELITEZC;
-            case "BELOFTEN":
+            case "Belofte":
                 return Wedstrijd.Categorie.BELOFTEN;
-            case "JUNIOREN":
+            case "Junioren":
                 return Wedstrijd.Categorie.JUNIOREN;
-            case "NIEUWELINGEN":
+            case "Nieuwelingen":
                 return Wedstrijd.Categorie.NIEUWELINGEN;
-            case "ASPIRANTEN":
+            case "Aspiranten":
                 return Wedstrijd.Categorie.ASPIRANTEN;
             default:
                 return Wedstrijd.Categorie.PROFS;

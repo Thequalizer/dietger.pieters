@@ -48,12 +48,18 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.TravelMode;
 
 import org.joda.time.DateTime;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -76,6 +82,7 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
 
+    private MyTaskParam myTaskParam;
     private GoogleMap mMap;
     private OnFragmentInteractionListener mListener;
     private Button button;
@@ -159,21 +166,26 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+
         InitMapTask task = new InitMapTask();
 
         try {
-            this.mMap = task.execute(new MyTaskParam(w,mMap)).get();
+            if (WedstrijdController.isInternetAvailable())
+                myTaskParam = task.execute(new MyTaskParam(w,mMap)).get();
+
+            if (myTaskParam != null){
+
+                this.mMap = myTaskParam.getGoogleMap();
+            }
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(9));
-
-        // Add a marker in Sydney and move the camera
-        Marker marker = googleMap.addMarker(new MarkerOptions().position(latLngCurrent).title("Marker in Vertrek").snippet(w.getVertrekAdres()));
-        marker.showInfoWindow();
 
 /*      if (WedstrijdController.isInternetAvailable()) {
 
@@ -299,17 +311,42 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
                     addPolyline(result,mMap);
 
 
-                    DistanceMatrix distanceMatrix;
-                    distanceMatrixApiRequest = DistanceMatrixApi.getDistanceMatrix(getGeoContext(), origin, vertrekAdres);
+                    distanceMatrixApiRequest = DistanceMatrixApi.newRequest(getGeoContext());
+                    DistanceMatrix distanceMatrix = distanceMatrixApiRequest.origins(origin).
+                            destinations(vertrekAdres).
+                            mode(TravelMode.DRIVING).
+                            avoid(DirectionsApi.RouteRestriction.TOLLS).
+                            language("nl-BE").await();
 
-                    GeolocationApi.Response response = new GeolocationApi.Response();
+
+                    DistanceMatrixRow row = distanceMatrix.rows[0];
+                    DistanceMatrixElement[] element = row.elements;
+
+                    System.out.println(distanceMatrix);
+                    System.out.println(row.toString());
+                    System.out.println(element);
+                    System.out.println(element[0].toString());
+
+
+
+                    BufferedReader reader = null;
+
+
+
+
+
+
+                            GeolocationApi.Response response = new GeolocationApi.Response();
+
+
+                    response.getResult();
 
 
 
 
                     // Add a marker in Sydney and move the camera
                     Marker marker = mMap.addMarker(new MarkerOptions().
-                            position(new LatLng(lat,lon)).title("Marker in Vertrek").snippet("Reisduur: " + distanceMatrixApiRequest.));
+                            position(myTaskParam.getLatLng()).title(w.getTitel()).snippet("Reisduur: " + element[0].duration.humanReadable + ", " + "Afstand: " + element[0].distance));
                     marker.showInfoWindow();
 
                 }

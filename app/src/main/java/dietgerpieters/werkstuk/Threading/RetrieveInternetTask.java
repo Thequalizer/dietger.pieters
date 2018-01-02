@@ -24,7 +24,7 @@ public class RetrieveInternetTask extends AsyncTask<String, Boolean, Boolean> {
             {
                 e.printStackTrace();
             }
-            if(addr.getHostAddress().equals("")){
+            if(addr == null){
                 return false;
             } else
             {
