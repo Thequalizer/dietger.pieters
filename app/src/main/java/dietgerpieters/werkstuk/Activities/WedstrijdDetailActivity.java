@@ -2,10 +2,15 @@ package dietgerpieters.werkstuk.Activities;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,33 +20,100 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import dietgerpieters.werkstuk.Adapters.DetailPagerAdapter;
 import dietgerpieters.werkstuk.Database.AppDatabase;
+import dietgerpieters.werkstuk.Fragments.DetailTabFragment;
+import dietgerpieters.werkstuk.Fragments.MapsTabFragment;
+import dietgerpieters.werkstuk.Listeners.TabListener;
 import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 
-public class WedstrijdDetailActivity extends AppCompatActivity {
+public class WedstrijdDetailActivity extends AppCompatActivity implements OnMapReadyCallback, DetailTabFragment.OnFragmentInteractionListener, MapsTabFragment.OnFragmentInteractionListener {
 
+    private GoogleMap mMap;
     private AppDatabase mDb;
-    private Button inschrBtn;
-    private Button uitschrBtn;
     Wedstrijd w;
+
+
+    ActionBar.Tab Tab1, Tab2;
+    Fragment fragmentMapsTab = new MapsTabFragment();
+    DetailTabFragment fragmentDetailTab = new DetailTabFragment();
+
+
+
+
     private String parentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wedstrijd_detail);
+        setContentView(R.layout.detail_activity);
+
+        Bundle extras = getIntent().getExtras();
+        w = (Wedstrijd) extras.getSerializable("wedstrijd");
+
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.addTab(tabLayout.newTab().setText("Details"));
+        tabLayout.addTab(tabLayout.newTab().setText("Locatie"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
+        final DetailPagerAdapter detailPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(), w);
+
+        viewPager.setAdapter(detailPagerAdapter);
+        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+
+        setSupportActionBar(myToolbar);
+
+
+
+
+
+
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+/*
 
         inschrBtn = (Button) findViewById(R.id.inschrijvingBtn);
         uitschrBtn = (Button) findViewById(R.id.uitchrijvingBtn);
 
+*/
 
-        Bundle extras = getIntent().getExtras();
 
-        w = (Wedstrijd) extras.getSerializable("wedstrijd");
 
         extras.getSerializable("wedstrijd");
         parentName = extras.getString("naam");
+
 
 
 
@@ -49,14 +121,14 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
         parentName = getIntent().getStringExtra("naam");*/
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
-        initButtons();
+        //initButtons();
 
 
-        TextView textView = findViewById(R.id.titelValue);
+        /*TextView textView = findViewById(R.id.titelValue);
         textView.setText(w.getTitel());
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
-        setSupportActionBar(myToolbar);
+*/
+       /* Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
+        setSupportActionBar(myToolbar);*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -97,24 +169,12 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initButtons(){
-
-
-        if (mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null) {
-            inschrBtn.setEnabled(true);
-            uitschrBtn.setEnabled(false);
-        } else {
-            inschrBtn.setEnabled(false);
-            uitschrBtn.setEnabled(true);
-            Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
 
     public void inschrijvingWedstrijd(View v){
 
-        TussenTabel t = null;
+        fragmentDetailTab.inschrijvingWedstrijd(v);
+      /*  TussenTabel t = null;
 
         if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null){
 
@@ -128,7 +188,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
             Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
 
         }
-
+*/
      /*   if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) == null) {
 
 
@@ -146,18 +206,35 @@ public class WedstrijdDetailActivity extends AppCompatActivity {
 
     }
     public void uitschrijvingWedstrijd(View v){
-        if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) != null) {
+        fragmentDetailTab.uitschrijvingWedstrijd(v);
+
+        /*if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) != null) {
 
             mDb.usersRacesDAO().deleteRelation2(mDb.userDAO().loadActiveUser().getId(), w.getId());
             mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().remove(w);
+
 
             inschrBtn.setEnabled(true);
             uitschrBtn.setEnabled(false);
         } else {
             Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al uitgeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
         }
-
+*/
     }
 
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

@@ -37,6 +37,10 @@
     <string name="aanmelden">Aanmelden</string>
     <string name="register">Register</string>
     <string name="afmelden">Afmelden</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

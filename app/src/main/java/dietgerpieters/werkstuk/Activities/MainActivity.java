@@ -115,18 +115,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbarmain);
 
 
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
 
 
-        for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")){
+        try {
+            for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")){
             if (mDb.wedstrijdDAO().getWedstrijd(wed1.getId()) == null){
                 mDb.wedstrijdDAO().insertWedstrijd(wed1);
             }
 
+            }
+        } catch (NullPointerException e){
+            System.out.println("No Wedstrijden found");
         }
 
 

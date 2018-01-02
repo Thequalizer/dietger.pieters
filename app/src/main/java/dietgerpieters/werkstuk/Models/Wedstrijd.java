@@ -29,10 +29,30 @@ public class Wedstrijd implements Serializable {
 
     private int aantalDeelnemers;
 
+
+    private String vertrekAdres;
+    private String aankomstAdres;
+
     private Categorie categorie;
 
     @PrimaryKey
     private int id;
+
+    public String getVertrekAdres() {
+        return vertrekAdres;
+    }
+
+    public void setVertrekAdres(String vertrekAdres) {
+        this.vertrekAdres = vertrekAdres;
+    }
+
+    public String getAankomstAdres() {
+        return aankomstAdres;
+    }
+
+    public void setAankomstAdres(String aankomstAdres) {
+        this.aankomstAdres = aankomstAdres;
+    }
 
 
     public int getId() {
