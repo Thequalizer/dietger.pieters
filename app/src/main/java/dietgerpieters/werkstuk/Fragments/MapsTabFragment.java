@@ -91,7 +91,7 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
                     REQUESTCODE);
-            return false
+            return false;
         }
         else {
             return true;
