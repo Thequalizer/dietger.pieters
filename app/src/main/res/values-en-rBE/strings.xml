@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CycleDroid Inscriptions</string>
+    <string name="overzicht">Overview</string>
+    <string name="Afstand">Distance</string>
+    <string name="Titel">Title</string>
+    <string name="km">km</string>
+    <string name="Deelnemers">Participants</string>
+    <string name="Wedstrijden">Cycling races</string>
+    <string name="Instellingen">Settings</string>
+    <string name="Info">Info</string>
+    <string name="Informatie">Information</string>
+    <string name="InfoContent">This app is developed by Dietger Pieters. Peace</string>
+    <string name="categorie">Category</string>
+    <string name="aankomst">Finish</string>
+    <string name="datum">Date</string>
+    <string name="vertrek_adres">Start</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="afmelden">Log out</string>
+    <string name="register">Register</string>
+    <string name="aanmelden">Log in</string>
+    <string name="gebruikersnaam">Username</string>
+    <string name="ok">OK</string>
+    <string name="leeftijd">Age</string>
+    <string name="achternaam">Lastname</string>
+    <string name="geslacht">Gender</string>
+    <string name="naam">Firstname</string>
+    <string name="aanbevolen_wedstrijden">Recommended races</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Close navigation drawer</string>
+</resources>

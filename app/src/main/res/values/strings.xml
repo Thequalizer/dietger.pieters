@@ -11,7 +11,6 @@
     <string name="Instellingen">Instellingen</string>
     <string name="Info">Info</string>
     <string name="Informatie">Informatie</string>
-    <string name="InfoContent">Deze app is ontwikkeld door Dietger Pieters.\n\n\n\nStudent aan de Erasmushogeschool Brussel campus Kaai.\n\n\n\nVersie 0.0.1</string>
     <string-array name="categories_array">
         <item>Profs</item>
         <item>Elite zonder contract</item>
@@ -45,6 +44,8 @@
     <string name="datum">Datum</string>
     <string name="aankomst">Aankomst</string>
     <string name="categorie">Categorie</string>
+    <string name="InfoContent">Deze app is ontwikkeld door Dietger Pieters.    Student aan de Erasmushogeschool Brussel campus Kaai.    Versie 0.0.1</string>
+    <string name="InfoContent">Deze app is ontwikkeld door Dietger Pieters.    Student aan de Erasmushogeschool Brussel campus Kaai.    Versie 0.0.1</string>
 
 
 </resources>
