@@ -20,7 +20,7 @@ public class ChooseLoginRegisterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_choose_lorr, container, false);
     }
 
-    public void doLoginF(View v){
+    public void doLoginF(View v) {
 
     }
 

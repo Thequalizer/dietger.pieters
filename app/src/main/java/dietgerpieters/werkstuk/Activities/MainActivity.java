@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String[] mStringOfPlanets = new String[5];
 
 
-
     boolean date1, date2 = false;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private DatePickerDialog.OnDateSetListener mDateListener2;
@@ -74,11 +73,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActionBarDrawerToggle mDrawerToggle;
 
-    private void checkFields(){
-        if (date1 && date2 && categorieSpinner.getSelectedItem().toString() != null){
+    private void checkFields() {
+        if (date1 && date2 && categorieSpinner.getSelectedItem().toString() != null) {
             btnHit.setEnabled(true);
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-
     }
-    public void toonInschrijvingen(View v){
+
+    public void toonInschrijvingen(View v) {
         Intent intent = new Intent(MainActivity.this, InschrijvingenActivity.class);
         startActivity(intent);
 
@@ -121,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         }
 
 
-            Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbarmain);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbarmain);
 
 
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
@@ -135,16 +135,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (WedstrijdController.isInternetAvailable()) {
 
 
-                try {
-                    for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")) {
-                        if (mDb.wedstrijdDAO().getWedstrijd(wed1.getId()) == null) {
-                            mDb.wedstrijdDAO().insertWedstrijd(wed1);
-                        }
-
+            try {
+                for (Wedstrijd wed1 : WedstrijdController.initWedstrijdDB("https://api.myjson.com/bins/17jwf7")) {
+                    if (mDb.wedstrijdDAO().getWedstrijd(wed1.getId()) == null) {
+                        mDb.wedstrijdDAO().insertWedstrijd(wed1);
                     }
-                } catch (NullPointerException e) {
-                    System.out.println("No Wedstrijden found");
+
                 }
+            } catch (NullPointerException e) {
+                System.out.println("No Wedstrijden found");
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -154,13 +154,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerToggle.syncState();
 
 
-
-
         setTitle("CycleDroid");
 
 
         initNavigationDrawer();
-
 
 
         categorieSpinner = (Spinner) findViewById(R.id.categorie_spinner);
@@ -249,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void initNavigationDrawer(){
+    private void initNavigationDrawer() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -262,7 +259,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         textView_naam_menu.setText(naam);
-
 
 
     }
@@ -287,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.println("Excep" + e);
         }
 
-        if(date1.before(date2) || date1.getTime() == date2.getTime()) {
+        if (date1.before(date2) || date1.getTime() == date2.getTime()) {
 
             categorie = categorieSpinner.getSelectedItem().toString();
             String url = "https://api.myjson.com/bins/17jwf7";
@@ -298,9 +294,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 wedstrijden = WedstrijdController.getWedstrijdenMetDatum(url, date1, date2, categorie);
             else
                 wedstrijden = mDb.wedstrijdDAO().loadAllOnCategorie(CategorieConverter.toCategorie(categorie));
-
-
-
 
 
             Intent myIntent = new Intent(MainActivity.this, WedstrijdenOverzichtActivity.class);
@@ -323,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
 
-        switch (id){
+        switch (id) {
             case R.id.nav_mijn_ins:
                 toonInschrijvingen(new View(this));
                 break;
@@ -338,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void checkSureLogout(){
+    private void checkSureLogout() {
 
         // 1. Instantiate an AlertDialog.Builder with its constructor
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);

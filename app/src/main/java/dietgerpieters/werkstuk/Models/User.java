@@ -39,6 +39,7 @@ public class User implements Serializable {
         this.geslacht = geslacht;
         ingeschrevenWedstrijden = new ArrayList<>();
     }
+
     public List<Wedstrijd> getIngeschrevenWedstrijden() {
         return ingeschrevenWedstrijden;
     }

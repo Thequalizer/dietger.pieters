@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void initComponents(){
+    private void initComponents() {
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
         this.username = (EditText) findViewById(R.id.gebruikersnaam);
@@ -39,9 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void doLogin(View v){
+    public void doLogin(View v) {
         String username = this.username.getText().toString();
-        if (mDb.userDAO().getUserByName(username) != null){
+        if (mDb.userDAO().getUserByName(username) != null) {
             mDb.userDAO().loginUser(username);
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);

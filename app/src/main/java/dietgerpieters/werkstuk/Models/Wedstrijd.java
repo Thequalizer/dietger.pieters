@@ -22,17 +22,11 @@ import dietgerpieters.werkstuk.TypeConverters.DateConverter;
 public class Wedstrijd implements Serializable {
 
     private String titel;
-
     private double afstand;
-
     private int maxAantalDeelnemers;
-
     private int aantalDeelnemers;
-
-
     private String vertrekAdres;
     private String aankomstAdres;
-
     private Categorie categorie;
 
     @PrimaryKey
@@ -62,6 +56,7 @@ public class Wedstrijd implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
     public Categorie getCategorie() {
         return categorie;
     }
@@ -123,10 +118,11 @@ public class Wedstrijd implements Serializable {
     private boolean afgelopen;
     //private HashMap uitslag;
 
-    public Wedstrijd(){
+    public Wedstrijd() {
 
     }
-    public Wedstrijd (String wTitel, double wAfstand, int wWantalDeelnemers, Date wVertrekUur, Categorie categorie, int id){
+
+    public Wedstrijd(String wTitel, double wAfstand, int wWantalDeelnemers, Date wVertrekUur, Categorie categorie, int id) {
         this.id = id;
         this.titel = wTitel;
         this.aantalDeelnemers = wWantalDeelnemers;
@@ -136,7 +132,7 @@ public class Wedstrijd implements Serializable {
         this.categorie = categorie;
     }
 
-    public void stopWedstrijd(){
+    public void stopWedstrijd() {
         this.afgelopen = true;
     }
 

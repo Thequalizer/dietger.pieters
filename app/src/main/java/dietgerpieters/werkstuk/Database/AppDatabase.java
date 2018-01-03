@@ -21,7 +21,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
     public abstract WedstrijdDAO wedstrijdDAO();
+
     public abstract UserDAO userDAO();
+
     public abstract UsersRacesDAO usersRacesDAO();
 
 

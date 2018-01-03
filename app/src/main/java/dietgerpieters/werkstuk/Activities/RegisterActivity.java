@@ -19,7 +19,7 @@ import dietgerpieters.werkstuk.Fragments.RegisterInputFragment;
 import dietgerpieters.werkstuk.Models.User;
 import dietgerpieters.werkstuk.R;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterInputFragment.OnUserRegisterListener{
+public class RegisterActivity extends AppCompatActivity implements RegisterInputFragment.OnUserRegisterListener {
 
     private AppDatabase mDb;
     private NumberPicker np;
@@ -27,8 +27,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
     private EditText naamEdit;
     private EditText achternaamEdit;
     private Spinner geslachtSpnr;
-
-
 
 
     @Override
@@ -41,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
 
     }
 
-    private void initComponents(){
+    private void initComponents() {
 
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
@@ -59,11 +57,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
         //Set a value change listener for NumberPicker
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 //doe er iets mee
             }
         });
-
 
 
         registerBtn = (Button) findViewById(R.id.send_register);
@@ -80,14 +77,13 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
         geslachtSpnr.setAdapter(adapter);
 
 
-
     }
 
     @Override
     public void onRegisterButtonListener(View v) {
         PreviewRegisterInputFragment pFragment = (PreviewRegisterInputFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_input_preview);
 
-        if (np.getValue() == 0 || naamEdit.getText().toString().trim().length() == 0|| geslachtSpnr.getSelectedItem().toString() == null || achternaamEdit.getText().toString().trim().length() == 0){
+        if (np.getValue() == 0 || naamEdit.getText().toString().trim().length() == 0 || geslachtSpnr.getSelectedItem().toString() == null || achternaamEdit.getText().toString().trim().length() == 0) {
             Toast.makeText(RegisterActivity.this, "Niet alle velden zijn juist ingevuld", Toast.LENGTH_SHORT).show();
             pFragment.disableButton();
         } else {
@@ -102,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
         }
     }
 
-    public void doRegister(View v){
+    public void doRegister(View v) {
         TextView naam = (TextView) findViewById(R.id.naam_info);
         String tNaam = naam.getText().toString();
         TextView aNaam = (TextView) findViewById(R.id.achternaam_info);
@@ -115,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInput
         User user = new User(tNaam, tANaam, tLeeftijd, tGeslacht);
 
 
-        if (mDb.userDAO().getUserByName(user.getNaam()) == null){
+        if (mDb.userDAO().getUserByName(user.getNaam()) == null) {
             mDb.userDAO().insertUser(user);
 
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);

@@ -37,7 +37,7 @@ import dietgerpieters.werkstuk.Threading.RetrieveInternetTask;
 public class WedstrijdController {
     private static JsonTask jsonTask;
 
-    public static List<Wedstrijd> initWedstrijdDB(String url){
+    public static List<Wedstrijd> initWedstrijdDB(String url) {
         jsonTask = new JsonTask();
         List<Wedstrijd> wedstrijden = new ArrayList<>();
         Date datum = Calendar.getInstance().getTime();
@@ -47,12 +47,11 @@ public class WedstrijdController {
             JSONObject jsonObject = new JSONObject(jsonTask.execute(url).get());
 
 
-            JSONArray jsonArray1 =  jsonObject.getJSONArray("Profs");
-            SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+            JSONArray jsonArray1 = jsonObject.getJSONArray("Profs");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
-            for (int i=0; i < jsonArray1.length(); i++)
-            {
+            for (int i = 0; i < jsonArray1.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray1.getJSONObject(i);
@@ -69,7 +68,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -82,16 +81,13 @@ public class WedstrijdController {
                     wedstrijden.add(wedstrijd);
 
 
-
-
                 } catch (JSONException e) {
                     // Oops
                 }
             }
 
-            jsonArray1 =  jsonObject.getJSONArray("Elite zonder contract");
-            for (int i=0; i < jsonArray1.length(); i++)
-            {
+            jsonArray1 = jsonObject.getJSONArray("Elite zonder contract");
+            for (int i = 0; i < jsonArray1.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray1.getJSONObject(i);
@@ -108,7 +104,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -121,15 +117,12 @@ public class WedstrijdController {
                     wedstrijden.add(wedstrijd);
 
 
-
-
                 } catch (JSONException e) {
                     // Oops
                 }
             }
-            jsonArray1 =  jsonObject.getJSONArray("Belofte");
-            for (int i=0; i < jsonArray1.length(); i++)
-            {
+            jsonArray1 = jsonObject.getJSONArray("Belofte");
+            for (int i = 0; i < jsonArray1.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray1.getJSONObject(i);
@@ -142,7 +135,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -154,15 +147,12 @@ public class WedstrijdController {
                     wedstrijden.add(wedstrijd);
 
 
-
-
                 } catch (JSONException e) {
                     // Oops
                 }
             }
-            jsonArray1 =  jsonObject.getJSONArray("Junioren");
-            for (int i=0; i < jsonArray1.length(); i++)
-            {
+            jsonArray1 = jsonObject.getJSONArray("Junioren");
+            for (int i = 0; i < jsonArray1.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray1.getJSONObject(i);
@@ -175,7 +165,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -187,15 +177,12 @@ public class WedstrijdController {
                     wedstrijden.add(wedstrijd);
 
 
-
-
                 } catch (JSONException e) {
                     // Oops
                 }
             }
-            jsonArray1 =  jsonObject.getJSONArray("Nieuwelingen");
-            for (int i=0; i < jsonArray1.length(); i++)
-            {
+            jsonArray1 = jsonObject.getJSONArray("Nieuwelingen");
+            for (int i = 0; i < jsonArray1.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray1.getJSONObject(i);
@@ -208,7 +195,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -220,15 +207,12 @@ public class WedstrijdController {
                     wedstrijden.add(wedstrijd);
 
 
-
-
                 } catch (JSONException e) {
                     // Oops
                 }
             }
-            jsonArray1 =  jsonObject.getJSONArray("Aspiranten");
-            for (int i=0; i < jsonArray1.length(); i++)
-            {
+            jsonArray1 = jsonObject.getJSONArray("Aspiranten");
+            for (int i = 0; i < jsonArray1.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray1.getJSONObject(i);
@@ -241,7 +225,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -251,8 +235,6 @@ public class WedstrijdController {
 
 
                     wedstrijden.add(wedstrijd);
-
-
 
 
                 } catch (JSONException e) {
@@ -271,9 +253,9 @@ public class WedstrijdController {
         return null;
 
 
-
     }
-    public static List<Wedstrijd> getAanbevolenWedstrijden(Wedstrijd.Categorie categorie, String url, ArrayList<Wedstrijd> gekozenWedstrijden){
+
+    public static List<Wedstrijd> getAanbevolenWedstrijden(Wedstrijd.Categorie categorie, String url, ArrayList<Wedstrijd> gekozenWedstrijden) {
         jsonTask = new JsonTask();
         List<Wedstrijd> wedstrijden = new ArrayList<>();
         Date datum = Calendar.getInstance().getTime();
@@ -285,7 +267,7 @@ public class WedstrijdController {
             String catAfterToString;
 
 
-            switch (categorie){
+            switch (categorie) {
                 case PROFS:
                     catAfterToString = "Profs";
                     break;
@@ -309,12 +291,11 @@ public class WedstrijdController {
 
             }
 
-            JSONArray jsonArray =  jsonObject.getJSONArray(catAfterToString);
-            SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+            JSONArray jsonArray = jsonObject.getJSONArray(catAfterToString);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
-            for (int i=0; i < jsonArray.length(); i++)
-            {
+            for (int i = 0; i < jsonArray.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray.getJSONObject(i);
@@ -327,7 +308,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -336,15 +317,14 @@ public class WedstrijdController {
                     wedstrijd = new Wedstrijd(oneObjectsItem, afstand, 50, datum, categorie, pk);
 
 
-
                     boolean erin = false;
-                    for (Wedstrijd w : gekozenWedstrijden){
-                        if (w.getId() == wedstrijd.getId()){
+                    for (Wedstrijd w : gekozenWedstrijden) {
+                        if (w.getId() == wedstrijd.getId()) {
                             erin = true;
                         }
 
                     }
-                    if (!erin){
+                    if (!erin) {
                         wedstrijden.add(wedstrijd);
 
                     }
@@ -366,19 +346,20 @@ public class WedstrijdController {
         return null;
 
     }
-    public static List<Wedstrijd> getWedstrijdenMetDatum(String url, Date dateVan, Date dateTot, String categorie){
+
+    public static List<Wedstrijd> getWedstrijdenMetDatum(String url, Date dateVan, Date dateTot, String categorie) {
         jsonTask = new JsonTask();
         Wedstrijd wedstrijd;
         List<Wedstrijd> wedstrijden = new ArrayList<>();
         Date datum = Calendar.getInstance().getTime();
         try {
             JSONObject jsonObject = new JSONObject(jsonTask.execute(url).get());
-            JSONArray jsonArray =  jsonObject.getJSONArray(categorie);
+            JSONArray jsonArray = jsonObject.getJSONArray(categorie);
 
-            SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Wedstrijd.Categorie categorie1;
 
-            switch (categorie){
+            switch (categorie) {
                 case "Profs":
                     categorie1 = Wedstrijd.Categorie.PROFS;
                     break;
@@ -397,12 +378,12 @@ public class WedstrijdController {
                 case "Aspiranten":
                     categorie1 = Wedstrijd.Categorie.ASPIRANTEN;
                     break;
-                default: categorie1 = Wedstrijd.Categorie.PROFS;
+                default:
+                    categorie1 = Wedstrijd.Categorie.PROFS;
             }
 
 
-            for (int i=0; i < jsonArray.length(); i++)
-            {
+            for (int i = 0; i < jsonArray.length(); i++) {
 
                 try {
                     JSONObject oneObject = jsonArray.getJSONObject(i);
@@ -418,7 +399,7 @@ public class WedstrijdController {
                     try {
                         datum = dateFormat.parse(datumString);
 
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //oopsie
                     }
 
@@ -429,8 +410,7 @@ public class WedstrijdController {
                     wedstrijd.setVertrekAdres(vertrekString);
 
 
-
-                    if (wedstrijd.getVertrekDatum().after(dateVan) && wedstrijd.getVertrekDatum().before(dateTot)){
+                    if (wedstrijd.getVertrekDatum().after(dateVan) && wedstrijd.getVertrekDatum().before(dateTot)) {
                         wedstrijden.add(wedstrijd);
                     }
 
@@ -449,6 +429,7 @@ public class WedstrijdController {
         }
         return null;
     }
+
     public static boolean isInternetAvailable() {
         RetrieveInternetTask task = new RetrieveInternetTask();
         boolean isOnline = false;

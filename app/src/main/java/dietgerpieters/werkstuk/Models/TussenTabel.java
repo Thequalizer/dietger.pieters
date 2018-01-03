@@ -30,6 +30,7 @@ public class TussenTabel implements Serializable {
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
     public int getId() {
         return id;
     }

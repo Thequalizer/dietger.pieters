@@ -43,7 +43,6 @@ public class DetailTabFragment extends Fragment {
     private static TextView catText;
 
 
-
     private ContentResolver mCr;
     private static AppDatabase mDb;
     private static Button inschrBtn;
@@ -71,7 +70,6 @@ public class DetailTabFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-
         initComponents();
         initViewComponents();
 
@@ -94,7 +92,7 @@ public class DetailTabFragment extends Fragment {
         mListener = null;
     }
 
-    private void initViewComponents(){
+    private void initViewComponents() {
         this.dlnText = (TextView) getActivity().findViewById(R.id.dlnVal);
         this.vAdresText = (TextView) getActivity().findViewById(R.id.vAdresVal);
         this.aAdresText = (TextView) getActivity().findViewById(R.id.aAdresval);
@@ -109,7 +107,6 @@ public class DetailTabFragment extends Fragment {
         String formatted = format1.format(cal.getTime());
 
 
-
         this.dlnText.setText(String.valueOf(w.getAantalDeelnemers()));
         this.vAdresText.setText(w.getVertrekAdres());
         this.aAdresText.setText(w.getAankomstAdres());
@@ -119,13 +116,12 @@ public class DetailTabFragment extends Fragment {
 
     }
 
-    public void uitschrijvingWedstrijd(View v){
+    public void uitschrijvingWedstrijd(View v) {
 
-        if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) != null) {
+        if (mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) != null) {
 
             mDb.usersRacesDAO().deleteRelation2(mDb.userDAO().loadActiveUser().getId(), w.getId());
             mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().remove(w);
-
 
 
             int dln = Integer.parseInt(dlnText.getText().toString());
@@ -145,6 +141,7 @@ public class DetailTabFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -153,47 +150,21 @@ public class DetailTabFragment extends Fragment {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
-                    //agenda toevoegen/////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                } else {
-
-
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+
         }
     }
 
 
-    public  void inschrijvingWedstrijd(View v){
+    public void inschrijvingWedstrijd(View v) {
 
         TussenTabel t = null;
 
 
-        if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null){
+        if (mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null) {
 
             t = new TussenTabel(mDb.userDAO().loadActiveUser().getId(), w.getId());
 
@@ -210,13 +181,7 @@ public class DetailTabFragment extends Fragment {
 
             if (WedstrijdController.isInternetAvailable()) {
                 AgendaTask agendaTask = new AgendaTask();
-
-
-                //agendaTask.execute(new MyAgendaTaskParams(getActivity(), w, getActivity().getApplicationContext().getContentResolver(), 1, w.getVertrekDatum().getTime(), w.getVertrekDatum().getTime(), Calendar.getInstance(), Calendar.getInstance()));
             }
-
-
-
 
 
         } else {
@@ -224,24 +189,9 @@ public class DetailTabFragment extends Fragment {
 
         }
 
-     /*   if (mDb.wedstrijdDAO().getWedstrijd(w.getId()) == null) {
-
-
-
-            mDb.wedstrijdDAO().insertWedstrijd(w);
-
-
-
-
-            inschrBtn.setEnabled(false);
-            uitschrBtn.setEnabled(true);
-        } else {
-            Toast.makeText(WedstrijdDetailActivity.this, "Je  bent al ingeschreven voor deze wedstrijd", Toast.LENGTH_SHORT).show();
-        }*/
-
     }
-    private void initComponents(){
 
+    private void initComponents() {
 
 
         mDb = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
@@ -256,8 +206,6 @@ public class DetailTabFragment extends Fragment {
 
         this.inschrBtn = (Button) getActivity().findViewById(R.id.inschrijvingBtn);
         this.uitschrBtn = (Button) getActivity().findViewById(R.id.uitchrijvingBtn);
-
-
 
 
         if (mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) == null) {

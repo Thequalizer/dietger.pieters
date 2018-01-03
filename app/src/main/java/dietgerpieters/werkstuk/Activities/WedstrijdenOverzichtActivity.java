@@ -33,6 +33,7 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +47,7 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
 
         final ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) getIntent().getSerializableExtra("wedstrijdenLijst");
 
-        for (int i=0; i < myList.size(); i++)
-        {
+        for (int i = 0; i < myList.size(); i++) {
 
 
             Wedstrijd w = myList.get(i);
@@ -60,10 +60,7 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
             System.out.println("New intent");
 
 
-
         }
-
-
 
 
         ListView listview = (ListView) findViewById(R.id.listview);
@@ -80,7 +77,7 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(WedstrijdenOverzichtActivity.this, WedstrijdDetailActivity.class);
                 Bundle extras = new Bundle();
-                extras.putSerializable("wedstrijd",myList.get(i));
+                extras.putSerializable("wedstrijd", myList.get(i));
                 extras.putString("naam", "WedstrijdenOverzichtActivity");
                 intent.putExtras(extras);
                 startActivity(intent);
@@ -91,14 +88,13 @@ public class WedstrijdenOverzichtActivity extends AppCompatActivity {
 
     }
 
-    private void initLayout(){
-        if ((getResources().getConfiguration().screenLayout &      Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            Toast.makeText(this, "Large screen",Toast.LENGTH_LONG).show();
+    private void initLayout() {
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            Toast.makeText(this, "Large screen", Toast.LENGTH_LONG).show();
 
-        }
-        else{
+        } else {
 
-            
+
         }
 
 

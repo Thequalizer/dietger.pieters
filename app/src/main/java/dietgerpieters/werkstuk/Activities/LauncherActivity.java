@@ -25,18 +25,15 @@ public class LauncherActivity extends FragmentActivity {
         this.mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
 
-
-
-
         checkForActiveLogin(savedInstanceState);
     }
 
-    private void checkForActiveLogin(Bundle savedInstanceState){
+    private void checkForActiveLogin(Bundle savedInstanceState) {
 
-            if (mDb.userDAO().loadActiveUser() != null) {
-                Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
-                startActivity(intent);
-            } else {
+        if (mDb.userDAO().loadActiveUser() != null) {
+            Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else {
             // Check that the activity is using the layout version with
             // the fragment_container FrameLayout
             if (findViewById(R.id.fragment_container) != null) {
@@ -59,11 +56,12 @@ public class LauncherActivity extends FragmentActivity {
         }
     }
 
-    public void doLogin(View v){
+    public void doLogin(View v) {
         Intent intent = new Intent(LauncherActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-    public void doRegister(View v){
+
+    public void doRegister(View v) {
         Intent intent = new Intent(LauncherActivity.this, RegisterActivity.class);
         startActivity(intent);
     }

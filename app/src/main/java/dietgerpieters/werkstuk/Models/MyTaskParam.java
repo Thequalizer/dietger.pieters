@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by User on 2/01/2018.
  */
 
-public class MyTaskParam  {
+public class MyTaskParam {
 
     private Wedstrijd w;
     private GoogleMap googleMap;

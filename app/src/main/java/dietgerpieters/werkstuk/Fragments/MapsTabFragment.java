@@ -83,20 +83,20 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     private Marker mCurrentPosMarker;
     private final int REQUESTCODE = 123;
 
-    public boolean checkPermission(){
+    public boolean checkPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                ){//Can add more as per requirement
+                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ) {//Can add more as per requirement
 
             ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     REQUESTCODE);
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,7 +106,6 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map2);
         mapFragment.getMapAsync(this);
-
 
 
         // Inflate the layout for this fragment
@@ -125,11 +124,10 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
         w = (Wedstrijd) extras.getSerializable("wedstrijd");
 
 
-
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
 
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
 
             //    ActivityCompat#requestPermissions
@@ -234,18 +232,14 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
     private void updateLocation(final LatLng location) {
 
 
-
-
-
         try {
-
 
 
             double lat = location.latitude;
             double lon = location.longitude;
             int maxResults = 1;
 
-            if(mCurrentPosMarker != null){
+            if (mCurrentPosMarker != null) {
                 mCurrentPosMarker.setPosition(location);
             } else {
                 mCurrentPosMarker = mMap.addMarker(new MarkerOptions().position(latLngCurrent).title("Current position"));
@@ -260,21 +254,20 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
 
             }
 
-                Address address = addresses.get(0);
-                ArrayList<String> addressFragments = new ArrayList<String>();
+            Address address = addresses.get(0);
+            ArrayList<String> addressFragments = new ArrayList<String>();
 
-                // Fetch the address lines using getAddressLine,
-                // join them, and send them to the thread.
-                for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
-                    addressFragments.add(address.getAddressLine(i));
-                }
+            // Fetch the address lines using getAddressLine,
+            // join them, and send them to the thread.
+            for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                addressFragments.add(address.getAddressLine(i));
+            }
 
-                String[] origin = {TextUtils.join(System.getProperty("line.separator"),
-                        addressFragments)};
-                String[] vertrekAdres = {w.getVertrekAdres()};
+            String[] origin = {TextUtils.join(System.getProperty("line.separator"),
+                    addressFragments)};
+            String[] vertrekAdres = {w.getVertrekAdres()};
 
-                final DirectionsResult result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.DRIVING).origin(origin[0]).destination(w.getVertrekAdres()).departureTime(new DateTime()).await();
-
+            final DirectionsResult result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.DRIVING).origin(origin[0]).destination(w.getVertrekAdres()).departureTime(new DateTime()).await();
 
 
             distanceMatrixApiRequest = DistanceMatrixApi.newRequest(getGeoContext());
@@ -315,7 +308,7 @@ public class MapsTabFragment extends Fragment implements OnMapReadyCallback {
 
                 }
             });
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
         } catch (InterruptedException e) {
             e.printStackTrace();

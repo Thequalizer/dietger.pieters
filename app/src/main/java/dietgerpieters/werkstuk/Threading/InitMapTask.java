@@ -61,10 +61,7 @@ public class InitMapTask extends AsyncTask<MyTaskParam, Void, MyTaskParam> {
                     .build();
 
 
-
             GeocodingResult[] geocodingResult = new GeocodingResult[0];
-
-
 
 
             try {
@@ -83,12 +80,9 @@ public class InitMapTask extends AsyncTask<MyTaskParam, Void, MyTaskParam> {
             LatLng sydney = new LatLng(Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lat)), Double.parseDouble(gson.toJson(geocodingResult[0].geometry.location.lng)));
 
 
-
-
-
             latLng = sydney;
 
-             myTaskParam.setLatLng(sydney);
+            myTaskParam.setLatLng(sydney);
             return myTaskParam;
         }
         return null;
@@ -104,7 +98,6 @@ public class InitMapTask extends AsyncTask<MyTaskParam, Void, MyTaskParam> {
         myTaskParam.getGoogleMap().moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         super.onPostExecute(myTaskParam);
-
 
 
     }

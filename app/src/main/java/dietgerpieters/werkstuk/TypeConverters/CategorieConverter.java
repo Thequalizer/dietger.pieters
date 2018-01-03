@@ -12,8 +12,8 @@ import dietgerpieters.werkstuk.Models.Wedstrijd;
 
 public class CategorieConverter {
     @TypeConverter
-    public static Wedstrijd.Categorie toCategorie(String categorie){
-        switch (categorie){
+    public static Wedstrijd.Categorie toCategorie(String categorie) {
+        switch (categorie) {
             case "Profs":
                 return Wedstrijd.Categorie.PROFS;
             case "Elite zonder contract":
@@ -33,7 +33,7 @@ public class CategorieConverter {
 
     @TypeConverter
     public static String toCategorieDbValue(Wedstrijd.Categorie categorie) {
-        switch (categorie){
+        switch (categorie) {
             case PROFS:
                 return "PROFS";
             case ELITEZC:

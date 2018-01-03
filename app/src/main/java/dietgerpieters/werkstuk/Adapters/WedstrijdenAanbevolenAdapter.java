@@ -43,9 +43,9 @@ public class WedstrijdenAanbevolenAdapter extends ArrayAdapter<Wedstrijd> {
         TextView afstandView = (TextView) rowView.findViewById(R.id.afstandValue);
         TextView titelView = (TextView) rowView.findViewById(R.id.titelValue);
 
-        final Button addBtn = (Button)rowView.findViewById(R.id.add_btn);
+        final Button addBtn = (Button) rowView.findViewById(R.id.add_btn);
 
-        addBtn.setOnClickListener(new View.OnClickListener(){
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //do something
@@ -60,7 +60,7 @@ public class WedstrijdenAanbevolenAdapter extends ArrayAdapter<Wedstrijd> {
                 Toast.makeText(getContext(), "Wedstrijd toegevoegd", Toast.LENGTH_SHORT).show();
 
 
-                ((InschrijvingenActivity)context).recreate();
+                ((InschrijvingenActivity) context).recreate();
 
 
             }

@@ -18,8 +18,10 @@ import dietgerpieters.werkstuk.Models.User;
 public interface UsersRacesDAO {
     @Insert
     public void insertRelation(TussenTabel tussenTabel);
+
     @Delete
     public void deleteRelation(TussenTabel tussenTabel);
+
     @Query("SELECT * FROM usersraces")
     public List<TussenTabel> loadAllUsersRacesRelations();
 
@@ -53,7 +55,6 @@ public interface UsersRacesDAO {
     @Query("SELECT * FROM users WHERE ingelogd = 1")
     public User loadActiveUser();
    */
-
 
 
 }

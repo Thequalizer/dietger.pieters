@@ -12,25 +12,19 @@ import java.net.UnknownHostException;
 public class RetrieveInternetTask extends AsyncTask<String, Boolean, Boolean> {
 
 
-        protected Boolean doInBackground(String... params)
-        {
-            InetAddress addr = null;
-            try
-            {
-                addr = InetAddress.getByName(params[0]);
-            }
-
-            catch (UnknownHostException e)
-            {
-                e.printStackTrace();
-            }
-            if(addr == null){
-                return false;
-            } else
-            {
-                return true;
-            }
+    protected Boolean doInBackground(String... params) {
+        InetAddress addr = null;
+        try {
+            addr = InetAddress.getByName(params[0]);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
         }
+        if (addr == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
     @Override

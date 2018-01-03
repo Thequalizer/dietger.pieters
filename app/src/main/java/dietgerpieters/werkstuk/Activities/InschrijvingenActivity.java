@@ -29,7 +29,6 @@ public class InschrijvingenActivity extends AppCompatActivity {
     private AppDatabase mDb;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,21 +43,17 @@ public class InschrijvingenActivity extends AppCompatActivity {
         mDb = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "wedstrijdDB").allowMainThreadQueries().build();
 
 
-
-
-
         ListView listview = (ListView) findViewById(R.id.list22);
 
         ListView listview_aanbevolen = (ListView) findViewById(R.id.list222);
 
-        ArrayList<TussenTabel> myListje = (ArrayList<TussenTabel>) mDb.usersRacesDAO().loadAllByUserID(mDb.userDAO().loadActiveUser().getId()) ;
+        ArrayList<TussenTabel> myListje = (ArrayList<TussenTabel>) mDb.usersRacesDAO().loadAllByUserID(mDb.userDAO().loadActiveUser().getId());
         ArrayList<Wedstrijd> myList = new ArrayList<>();
 
 
-        for (TussenTabel t : myListje){
+        for (TussenTabel t : myListje) {
             myList.add(mDb.wedstrijdDAO().getWedstrijd(t.getWedstrijdID()));
         }
-
 
 
         ArrayList<Wedstrijd> myListAanbevolen = new ArrayList<>();
@@ -78,7 +73,6 @@ public class InschrijvingenActivity extends AppCompatActivity {
         }
 
 
-
         WedstrijdenAdapter wAdapter = new WedstrijdenAdapter(InschrijvingenActivity.this, R.layout.wedstrijd_row, myList);
         WedstrijdenAanbevolenAdapter dAdapter = new WedstrijdenAanbevolenAdapter(InschrijvingenActivity.this, R.layout.wedstrijd_row_aanbevolen, myListAanbevolen);
 
@@ -87,15 +81,14 @@ public class InschrijvingenActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ArrayList<TussenTabel> myListje = (ArrayList<TussenTabel>) mDb.usersRacesDAO().loadAllByUserID(mDb.userDAO().loadActiveUser().getId()) ;
+                ArrayList<TussenTabel> myListje = (ArrayList<TussenTabel>) mDb.usersRacesDAO().loadAllByUserID(mDb.userDAO().loadActiveUser().getId());
                 ArrayList<Wedstrijd> myList = new ArrayList<>();
 
 
-                for (TussenTabel t : myListje){
+                for (TussenTabel t : myListje) {
                     myList.add(mDb.wedstrijdDAO().getWedstrijd(t.getWedstrijdID()));
                     mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().add(mDb.wedstrijdDAO().getWedstrijd(t.getWedstrijdID()));
                 }
-
 
 
                 Intent intent = new Intent(InschrijvingenActivity.this, WedstrijdDetailActivity.class);
@@ -108,8 +101,6 @@ public class InschrijvingenActivity extends AppCompatActivity {
         });
 
 
-
-
         listview_aanbevolen.setAdapter(dAdapter);
 
 
@@ -117,7 +108,6 @@ public class InschrijvingenActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ArrayList<Wedstrijd> myList = (ArrayList<Wedstrijd>) mDb.wedstrijdDAO().loadAllWedstrijden();
-
 
 
                 Intent intent = new Intent(InschrijvingenActivity.this, WedstrijdDetailActivity.class);

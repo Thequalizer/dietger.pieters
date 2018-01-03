@@ -52,15 +52,12 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
     DetailTabFragment fragmentDetailTab = new DetailTabFragment();
 
 
-
-
     private String parentName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
-
-
 
 
         Bundle extras = getIntent().getExtras();
@@ -72,7 +69,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
         tabLayout.addTab(tabLayout.newTab().setText("Locatie"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final DetailPagerAdapter detailPagerAdapter = new DetailPagerAdapter(getSupportFragmentManager(), w);
 
         viewPager.setAdapter(detailPagerAdapter);
@@ -96,15 +93,9 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
         });
 
 
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         setSupportActionBar(myToolbar);
-
-
-
-
-
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -115,7 +106,6 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
         uitschrBtn = (Button) findViewById(R.id.uitchrijvingBtn);
 
 */
-
 
 
         extras.getSerializable("wedstrijd");
@@ -139,6 +129,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -147,7 +138,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
 
 
-                if(parentName != null) {
+                if (parentName != null) {
                     upIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 
@@ -177,8 +168,7 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
     }
 
 
-
-    public void inschrijvingWedstrijd(View v){
+    public void inschrijvingWedstrijd(View v) {
 
         fragmentDetailTab.inschrijvingWedstrijd(v);
       /*  TussenTabel t = null;
@@ -212,7 +202,8 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
         }*/
 
     }
-    public void uitschrijvingWedstrijd(View v){
+
+    public void uitschrijvingWedstrijd(View v) {
         fragmentDetailTab.uitschrijvingWedstrijd(v);
 
         /*if(mDb.usersRacesDAO().loadRelation(mDb.userDAO().loadActiveUser().getId(), w.getId()) != null) {
@@ -230,12 +221,10 @@ public class WedstrijdDetailActivity extends AppCompatActivity implements Detail
     }
 
 
-
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
 
 }

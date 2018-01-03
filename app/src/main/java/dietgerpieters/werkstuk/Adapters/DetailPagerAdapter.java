@@ -24,7 +24,7 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        switch (i){
+        switch (i) {
             case 0:
                 DetailTabFragment detailTabFragment = new DetailTabFragment();
                 Bundle bundle = new Bundle();
