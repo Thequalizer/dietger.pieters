@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_maps_tab"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:padding="6dp">
 
 
     <TextView
@@ -14,11 +15,113 @@
         android:textSize="10pt"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vAdres"
+        android:layout_marginTop="10dp"
+        android:text="@string/vertrek_adres"
+        android:layout_below="@id/titelValue"
+        android:textSize="5pt"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vAdresVal"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:layout_below="@id/titelValue"
+        android:textSize="5pt"
+        android:layout_toRightOf="@id/vAdres"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aAdres"
+        android:layout_marginTop="10dp"
+        android:text="@string/aankomst"
+        android:layout_below="@id/vAdres"
+        android:textSize="5pt"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aAdresval"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:layout_below="@id/vAdres"
+        android:textSize="5pt"
+        android:layout_toRightOf="@id/vAdres"
+        android:layout_marginLeft="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datumVertrek"
+        android:layout_marginTop="10dp"
+        android:text="@string/datum"
+        android:layout_below="@id/aAdres"
+        android:textSize="5pt"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datumVal"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:layout_below="@id/aAdres"
+        android:textSize="5pt"
+        android:layout_toRightOf="@id/vAdres"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aantalDln"
+        android:layout_marginTop="10dp"
+        android:text="@string/Deelnemers"
+        android:layout_below="@id/datumVertrek"
+        android:textSize="5pt"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dlnVal"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:layout_below="@id/datumVal"
+        android:textSize="5pt"
+        android:layout_toRightOf="@id/vAdres"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/categorie"
+        android:layout_marginTop="10dp"
+        android:text="@string/categorie"
+        android:layout_below="@id/aantalDln"
+        android:textSize="5pt"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/categorieVal"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:layout_below="@id/dlnVal"
+        android:textSize="5pt"
+        android:layout_toRightOf="@id/vAdres"
+        android:layout_marginLeft="10dp"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/titelValue"
+        android:layout_below="@id/categorie"
         android:id="@+id/streepje"
         android:background="@android:color/darker_gray" />
 

@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import dietgerpieters.werkstuk.Activities.WedstrijdDetailActivity;
@@ -25,12 +28,21 @@ import dietgerpieters.werkstuk.Models.TussenTabel;
 import dietgerpieters.werkstuk.Models.Wedstrijd;
 import dietgerpieters.werkstuk.R;
 import dietgerpieters.werkstuk.Threading.AgendaTask;
+import dietgerpieters.werkstuk.TypeConverters.CategorieConverter;
 
 /**
  * Created by Dietger (Pantani) on 31/12/2017.
  */
 
 public class DetailTabFragment extends Fragment {
+
+    private static TextView dlnText;
+    private static TextView vAdresText;
+    private static TextView aAdresText;
+    private static TextView datumText;
+    private static TextView catText;
+
+
 
     private ContentResolver mCr;
     private static AppDatabase mDb;
@@ -61,6 +73,7 @@ public class DetailTabFragment extends Fragment {
 
 
         initComponents();
+        initViewComponents();
 
     }
 
@@ -81,6 +94,30 @@ public class DetailTabFragment extends Fragment {
         mListener = null;
     }
 
+    private void initViewComponents(){
+        this.dlnText = (TextView) getActivity().findViewById(R.id.dlnVal);
+        this.vAdresText = (TextView) getActivity().findViewById(R.id.vAdresVal);
+        this.aAdresText = (TextView) getActivity().findViewById(R.id.aAdresval);
+        this.catText = (TextView) getActivity().findViewById(R.id.categorieVal);
+        this.datumText = (TextView) getActivity().findViewById(R.id.datumVal);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(w.getVertrekDatum());
+
+
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+        String formatted = format1.format(cal.getTime());
+
+
+
+        this.dlnText.setText(String.valueOf(w.getAantalDeelnemers()));
+        this.vAdresText.setText(w.getVertrekAdres());
+        this.aAdresText.setText(w.getAankomstAdres());
+        this.catText.setText(CategorieConverter.toCategorieDbValue(w.getCategorie()));
+        this.datumText.setText(formatted);
+
+
+    }
 
     public void uitschrijvingWedstrijd(View v){
 
@@ -88,6 +125,13 @@ public class DetailTabFragment extends Fragment {
 
             mDb.usersRacesDAO().deleteRelation2(mDb.userDAO().loadActiveUser().getId(), w.getId());
             mDb.userDAO().loadActiveUser().getIngeschrevenWedstrijden().remove(w);
+
+
+
+            int dln = Integer.parseInt(dlnText.getText().toString());
+            dln--;
+            w.setAantalDeelnemers(dln);
+            dlnText.setText(String.valueOf(dln));
 
             inschrBtn.setEnabled(true);
             uitschrBtn.setEnabled(false);
@@ -158,11 +202,17 @@ public class DetailTabFragment extends Fragment {
             inschrBtn.setEnabled(false);
             uitschrBtn.setEnabled(true);
 
+
+            int dln = Integer.parseInt(dlnText.getText().toString());
+            dln++;
+            w.setAantalDeelnemers(dln);
+            dlnText.setText(String.valueOf(dln));
+
             if (WedstrijdController.isInternetAvailable()) {
                 AgendaTask agendaTask = new AgendaTask();
 
 
-                agendaTask.execute(new MyAgendaTaskParams(getActivity(), w, getActivity().getApplicationContext().getContentResolver(), 1, w.getVertrekDatum().getTime(), w.getVertrekDatum().getTime(), Calendar.getInstance(), Calendar.getInstance()));
+                //agendaTask.execute(new MyAgendaTaskParams(getActivity(), w, getActivity().getApplicationContext().getContentResolver(), 1, w.getVertrekDatum().getTime(), w.getVertrekDatum().getTime(), Calendar.getInstance(), Calendar.getInstance()));
             }
 
 

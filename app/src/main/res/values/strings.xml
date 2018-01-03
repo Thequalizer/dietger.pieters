@@ -41,6 +41,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vertrek_adres">Vertrek adres</string>
+    <string name="datum">Datum</string>
+    <string name="aankomst">Aankomst</string>
+    <string name="categorie">Categorie</string>
 
 
 </resources>
