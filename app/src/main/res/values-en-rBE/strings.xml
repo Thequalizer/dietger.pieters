@@ -30,4 +30,5 @@
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Close navigation drawer</string>
+    <string name="google_maps_key">AIzaSyCJOitdqPwgXCgIPw0__SRt64lfKFHp_xw</string>
 </resources>
