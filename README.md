@@ -1,3 +1,4 @@
 # WerkstukAndroid
 
-pls give me a 20/20
+Mijn data staat op een json file die gehost wordt door myjson.com 
+De link is https://api.myjson.com/bins/17jwf7
